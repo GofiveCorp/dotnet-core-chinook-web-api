@@ -84,13 +84,17 @@ namespace MyChinook.Controllers
         {
             try
             {
-                var album = await _dbAlbum.GetAlbumByArtistAsync(id);
-                if (album == null)
+                IEnumerable<Album> albums = await _dbAlbum.GetAlbumByArtistAsync(id);
+                if (albums == null)
                 {
                     return NotFound();
-                }
-                return Ok(album);
-            }catch (Exception ex)
+                }              
+                _response.Result = _mapper.Map<List<AlbumDto>>(albums);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessages = new List<string> { ex.ToString() };
