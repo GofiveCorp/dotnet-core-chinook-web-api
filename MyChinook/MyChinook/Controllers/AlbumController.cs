@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyChinook.Customizes.Logging;
 using MyChinook.Models.Dtos;
 using MyChinook.Models.Entities;
@@ -74,6 +73,24 @@ namespace MyChinook.Controllers
                 return Ok(_response);
             }
             catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+        [HttpGet("artist/{id}")]
+        public async Task<ActionResult<APIResponse>> GetByArtist(int id)
+        {
+            try
+            {
+                var album = await _dbAlbum.GetAlbumByArtistAsync(id);
+                if (album == null)
+                {
+                    return NotFound();
+                }
+                return Ok(album);
+            }catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessages = new List<string> { ex.ToString() };
