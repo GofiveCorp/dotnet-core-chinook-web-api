@@ -8,7 +8,6 @@ using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
 
-
 namespace MyChinook.Controllers
 {
     [Route("api/[controller]")]
