@@ -89,8 +89,8 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateTrack([FromBody] TrackDto CreateTrackDto)
         {
             try
-            {    
-                if ( await _dbTrack.GetAsync(u => u.Name.ToLower() == CreateTrackDto.Name.ToLower()) != null)
+            {
+                if (await _dbTrack.GetAsync(u => u.Name.ToLower() == CreateTrackDto.Name.ToLower()) != null)
                 {
                     ModelState.AddModelError("Error Message", " This Track Already Exist");
                     return BadRequest(ModelState);

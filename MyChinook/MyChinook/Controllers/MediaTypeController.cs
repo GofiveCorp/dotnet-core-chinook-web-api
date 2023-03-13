@@ -89,10 +89,10 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateMediaType([FromBody] MediaTypeDto CreateMediaTypeDto)
         {
             try
-            {    
-                if ( await _dbMediaType.GetAsync(u => u.Name.ToLower() == CreateMediaTypeDto.Name.ToLower()) != null)
+            {
+                if (await _dbMediaType.GetAsync(u => u.Name.ToLower() == CreateMediaTypeDto.Name.ToLower()) != null)
                 {
-                    ModelState.AddModelError("Error Message"," This Media Already Exist");
+                    ModelState.AddModelError("Error Message", " This Media Already Exist");
                     return BadRequest(ModelState);
                 }
                 if (CreateMediaTypeDto == null)

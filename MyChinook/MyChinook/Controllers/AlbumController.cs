@@ -90,10 +90,10 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateAlbum([FromBody] AlbumDto CreateAlbumDto)
         {
             try
-            {    
-                if ( await _dbAlbum.GetAsync(u => u.Title.ToLower() == CreateAlbumDto.Title.ToLower()) != null)
+            {
+                if (await _dbAlbum.GetAsync(u => u.Title.ToLower() == CreateAlbumDto.Title.ToLower()) != null)
                 {
-                    ModelState.AddModelError("Error Message"," This Title Already Exist");
+                    ModelState.AddModelError("Error Message", " This Title Already Exist");
                     return BadRequest(ModelState);
                 }
                 if (CreateAlbumDto == null)

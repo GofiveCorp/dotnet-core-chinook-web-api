@@ -1,6 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyChinook.Models.Entities
@@ -10,7 +8,6 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
-
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string? Company { get; set; }

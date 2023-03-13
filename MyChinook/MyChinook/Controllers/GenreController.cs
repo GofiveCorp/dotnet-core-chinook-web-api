@@ -88,8 +88,8 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateGenre([FromBody] GenreDto CreateGenreDto)
         {
             try
-            {    
-                if ( await _dbGenre.GetAsync(u => u.Name.ToLower() == CreateGenreDto.Name.ToLower()) != null)
+            {
+                if (await _dbGenre.GetAsync(u => u.Name.ToLower() == CreateGenreDto.Name.ToLower()) != null)
                 {
                     ModelState.AddModelError("Error Message", " This Genre Already Exist");
                     return BadRequest(ModelState);

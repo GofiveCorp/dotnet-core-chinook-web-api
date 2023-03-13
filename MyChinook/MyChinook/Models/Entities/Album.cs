@@ -8,12 +8,9 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AlbumId { get; set; }
-
         [ForeignKey("Artist")]
         public int ArtistId { get; set; }
-
         public Artist Artist { get; set; }
-
         public string Title { get; set; } = null!;
     }
 }

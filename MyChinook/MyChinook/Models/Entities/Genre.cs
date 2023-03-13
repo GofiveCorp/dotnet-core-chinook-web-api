@@ -8,7 +8,6 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GenreId { get; set; }
-
         public string Name { get; set; }
     }
 }
