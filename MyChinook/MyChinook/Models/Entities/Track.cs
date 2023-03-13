@@ -22,6 +22,7 @@ namespace MyChinook.Models.Entities
         public int Milliseconds { get; set; }
         public int? Bytes { get; set; }
         public decimal UnitPrice { get; set; }
+        
 
     }
 }
