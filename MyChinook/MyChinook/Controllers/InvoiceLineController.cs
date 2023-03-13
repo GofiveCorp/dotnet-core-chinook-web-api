@@ -89,7 +89,7 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateInvoiceLine([FromBody] InvoiceLineDto CreateInvoiceLineDto)
         {
             try
-            {               
+            {
                 if (CreateInvoiceLineDto == null)
                 {
                     return BadRequest(CreateInvoiceLineDto);

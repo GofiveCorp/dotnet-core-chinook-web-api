@@ -89,8 +89,8 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreatePlaylist([FromBody] PlaylistDto CreatePlaylistDto)
         {
             try
-            {    
-                
+            {
+
                 if (CreatePlaylistDto == null)
                 {
                     return BadRequest(CreatePlaylistDto);

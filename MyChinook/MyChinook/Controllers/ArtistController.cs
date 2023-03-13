@@ -89,10 +89,10 @@ namespace MyChinook.Controllers
         public async Task<ActionResult<APIResponse>> CreateArtist([FromBody] ArtistDto CreateArtistDto)
         {
             try
-            {    
-                if ( await _dbArtist.GetAsync(u => u.Name.ToLower() == CreateArtistDto.Name.ToLower()) != null)
+            {
+                if (await _dbArtist.GetAsync(u => u.Name.ToLower() == CreateArtistDto.Name.ToLower()) != null)
                 {
-                    ModelState.AddModelError("Error Message"," This Name Already Exist");
+                    ModelState.AddModelError("Error Message", " This Name Already Exist");
                     return BadRequest(ModelState);
                 }
                 if (CreateArtistDto == null)

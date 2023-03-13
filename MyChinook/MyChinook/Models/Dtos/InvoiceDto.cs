@@ -6,11 +6,9 @@ namespace MyChinook.Models.Dtos
     {
 
         public int InvoiceId { get; set; }
-
         //ForeignKey
         [Required]
         public int CustomerId { get; set; }
-
         public DateTime InvoiceDate { get; set; }
         public string? BillingAddress { get; set; }
         public string? BillingCity { get; set; }

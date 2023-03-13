@@ -8,12 +8,9 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InvoiceId { get; set; }
-
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-
         public Customer Customer { get; set; }
-
         public DateTime InvoiceDate { get; set; }
         public string? BillingAddress { get; set; }
         public string? BillingCity { get; set; }

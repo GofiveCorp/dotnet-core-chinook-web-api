@@ -4,7 +4,6 @@ namespace MyChinook.Models.Dtos
 {
     public class CustomerDto
     {
-
         public int CustomerId { get; set; }
         [Required]
         public string FirstName { get; set; } = null!;
