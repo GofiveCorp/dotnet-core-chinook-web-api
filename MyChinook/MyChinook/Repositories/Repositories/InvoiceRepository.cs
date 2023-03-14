@@ -1,4 +1,5 @@
-﻿using MyChinook.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyChinook.Data;
 using MyChinook.Models.Entities;
 using MyChinook.Repositories.IRepositories;
 
@@ -13,6 +14,9 @@ namespace MyChinook.Repositories.Repositories
             _db = dbContext;
         }
 
+        public Task<List<Invoice>> GetInvoiceByCustomerAsync(int id) 
+        =>  _db.Invoice.Where(u => u.CustomerId == id).ToListAsync();
+       
         public async Task<Invoice> UpdateAsync(Invoice invoice)
         {
 
