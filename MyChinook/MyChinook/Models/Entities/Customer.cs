@@ -19,10 +19,6 @@ namespace MyChinook.Models.Entities
         public string? Phone { get; set; }
         public string? Fax { get; set; }
         public string Email { get; set; } = null!;
-        public int? SupportRepId { get; set; }
-
-        
-
-        
+        public int? SupportRepId { get; set; } 
     }
 }

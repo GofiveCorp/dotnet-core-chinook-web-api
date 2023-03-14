@@ -18,6 +18,7 @@ namespace MyChinook.Configures
             CreateMap<MediaType, MediaTypeDto>().ReverseMap();
             CreateMap<Playlist, PlaylistDto>().ReverseMap();
             CreateMap<Track, TrackDto>().ReverseMap();
+            CreateMap<PlaylistTrack, PlaylistTrackDto>().ReverseMap();
         }
     }
 }
