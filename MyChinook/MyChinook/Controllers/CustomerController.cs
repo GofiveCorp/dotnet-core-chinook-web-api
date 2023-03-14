@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class CustomerController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly ICustomerRepository _dbCustomer;
-        private readonly IMapper _mapper;
 
-        public CustomerController(ILogging logging
-                                  , ICustomerRepository dbContext
-                                  , IMapper mappingConfig)
+        public CustomerController(IMapper mappingConfig,
+                                  ILogging logging,
+                                  ICustomerRepository dbContext)
         {
-            _dbCustomer = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbCustomer = dbContext;
         }
 
         [HttpGet]

@@ -19,11 +19,9 @@ namespace MyChinook.Data
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Track> Track { get; set; }
         public DbSet<Playlist> Playlist { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
             modelBuilder.Entity<Employee>().HasData(
                 new Employee
                 {
@@ -110,7 +108,6 @@ namespace MyChinook.Data
                     Email = "steve@chinookcorp.com",
                     HireDate = DateTime.Now,
                 });
-        
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
@@ -16,18 +15,18 @@ namespace MyChinook.Controllers
     public class InvoiceController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IInvoiceRepository _dbInvoice;
-        private readonly IMapper _mapper;
 
-        public InvoiceController(ILogging logging
-                                  , IInvoiceRepository dbContext
-                                  , IMapper mappingConfig)
+        public InvoiceController(IMapper mappingConfig,
+                                 ILogging logging,
+                                 IInvoiceRepository dbContext)
         {
-            _dbInvoice = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbInvoice = dbContext;
         }
 
         [HttpGet]

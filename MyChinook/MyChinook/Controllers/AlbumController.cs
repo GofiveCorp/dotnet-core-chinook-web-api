@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class AlbumController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IAlbumRepository _dbAlbum;
-        private readonly IMapper _mapper;
 
-        public AlbumController(ILogging logging
-                                  , IAlbumRepository dbContext
-                                  , IMapper mappingConfig)
+        public AlbumController(IMapper mappingConfig,
+                               ILogging logging,
+                               IAlbumRepository dbContext)
         {
-            _dbAlbum = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbAlbum = dbContext;
         }
 
         [HttpGet]

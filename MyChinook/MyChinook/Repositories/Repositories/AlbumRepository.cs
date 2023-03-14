@@ -8,7 +8,6 @@ namespace MyChinook.Repositories.Repositories
     public class AlbumRepository : Repository<Album>, IAlbumRepository
     {
         private readonly ApplicationDbContext _db;
-
         public AlbumRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;

@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class GenreController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IGenreRepository _dbGenre;
-        private readonly IMapper _mapper;
 
-        public GenreController(ILogging logging
-                                  , IGenreRepository dbContext
-                                  , IMapper mappingConfig)
+        public GenreController(IMapper mappingConfig,
+                               ILogging logging,
+                               IGenreRepository dbContext)
         {
-            _dbGenre = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbGenre = dbContext;
         }
 
         [HttpGet]

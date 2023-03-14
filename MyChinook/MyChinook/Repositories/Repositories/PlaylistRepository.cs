@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using MyChinook.Data;
+﻿using MyChinook.Data;
 using MyChinook.Models.Entities;
 using MyChinook.Repositories.IRepositories;
 
@@ -18,8 +17,6 @@ namespace MyChinook.Repositories.Repositories
             _db.Update(playlist);
             await _db.SaveChangesAsync();
             return playlist;
-        }
-
-        
+        }       
     }
 }

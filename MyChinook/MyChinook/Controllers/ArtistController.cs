@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class ArtistController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IArtistRepository _dbArtist;
-        private readonly IMapper _mapper;
 
-        public ArtistController(ILogging logging
-                                  , IArtistRepository dbContext
-                                  , IMapper mappingConfig)
+        public ArtistController(IMapper mappingConfig,
+                                ILogging logging,
+                                IArtistRepository dbContext)
         {
-            _dbArtist = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbArtist = dbContext;
         }
 
         [HttpGet]
