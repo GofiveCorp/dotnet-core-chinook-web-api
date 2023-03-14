@@ -4,7 +4,6 @@ namespace MyChinook.Models.Dtos
 {
     public class InvoiceLineDto
     {
-
         public int InvoiceLineId { get; set; }
         public int InvoiceId { get; set; }
         [Required]
@@ -12,6 +11,5 @@ namespace MyChinook.Models.Dtos
         [Required]
         public int Quantity { get; set; }
         public int TrackId { get; set; }
-
     }
 }

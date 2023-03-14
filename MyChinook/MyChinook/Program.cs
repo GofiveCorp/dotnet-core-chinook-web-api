@@ -6,7 +6,7 @@ using MyChinook.Customizes.Logging;
 using MyChinook.Data;
 using MyChinook.Repositories.IRepositories;
 using MyChinook.Repositories.Repositories;
-using System.Threading.RateLimiting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,7 @@ builder.Services.AddScoped<IMediaTypeRepository, MediaTypeRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ITrackRepository, TrackRepository>();
 builder.Services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+builder.Services.AddScoped<IPlaylistTrackRepository, PlaylistTrackRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ILogging, Logging>();
@@ -36,8 +37,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
-
-
 
 var app = builder.Build();
 

@@ -19,9 +19,11 @@ namespace MyChinook.Data
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Track> Track { get; set; }
         public DbSet<Playlist> Playlist { get; set; }
+        public DbSet<PlaylistTrack> PlaylistTrack { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            new PlaylistTrackTable(modelBuilder.Entity<PlaylistTrack>());
             modelBuilder.Entity<Employee>().HasData(
                 new Employee
                 {

@@ -4,7 +4,6 @@ namespace MyChinook.Models.Dtos
 {
     public class InvoiceDto
     {
-
         public int InvoiceId { get; set; }
         //ForeignKey
         [Required]
