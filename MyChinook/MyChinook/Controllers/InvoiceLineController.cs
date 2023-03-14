@@ -80,6 +80,28 @@ namespace MyChinook.Controllers
             return _response;
         }
 
+        [HttpGet("invoice/{id}")]       
+        public async Task<ActionResult<APIResponse>> GetByInvoice(int id)
+        {
+            try
+            {
+                IEnumerable<InvoiceLine> invoiceLines = await _dbInvoiceLine.GetInvoiceLineByInvoiceAsync(id);
+                if (invoiceLines == null)
+                {
+                    return NotFound();
+                }
+                _response.Result = _mapper.Map<List<InvoiceLineDto>>(invoiceLines);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString()};
+            }
+            return _response;
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]

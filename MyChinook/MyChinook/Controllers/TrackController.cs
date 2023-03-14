@@ -80,6 +80,71 @@ namespace MyChinook.Controllers
             return _response;
         }
 
+        [HttpGet("album/id")]
+        public async Task<ActionResult<APIResponse>> GetByAlbum(int id)
+        {
+            try
+            {
+                IEnumerable<Track> tracks = await _dbTrack.GetTrackByAlbumAsync(id);
+                if (tracks == null)
+                {
+                    return NotFound();
+                }
+                _response.Result = _mapper.Map<List<TrackDto>>(tracks);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpGet("genre/id")]
+        public async Task<ActionResult<APIResponse>> GetByGenre(int id)
+        {
+            try
+            {
+                IEnumerable<Track> tracks = await _dbTrack.GetTrackByGenreAsync(id);
+                if (tracks == null)
+                {
+                    return NotFound();
+                }
+                _response.Result = _mapper.Map<List<TrackDto>>(tracks);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpGet("mediaType/id")]
+        public async Task<ActionResult<APIResponse>> GetByMediaType(int id)
+        {
+            try
+            {
+                IEnumerable<Track> tracks = await _dbTrack.GetTrackByMediaTypeAsync(id);
+                if (tracks == null)
+                {
+                    return NotFound();
+                }
+                _response.Result = _mapper.Map<List<TrackDto>>(tracks);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
