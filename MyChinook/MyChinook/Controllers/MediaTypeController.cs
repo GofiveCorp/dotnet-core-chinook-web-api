@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class MediaTypeController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IMediaTypeRepository _dbMediaType;
-        private readonly IMapper _mapper;
 
-        public MediaTypeController(ILogging logging
-                                  , IMediaTypeRepository dbContext
-                                  , IMapper mappingConfig)
+        public MediaTypeController(IMapper mappingConfig,
+                                   ILogging logging, 
+                                   IMediaTypeRepository dbContext)
         {
-            _dbMediaType = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbMediaType = dbContext;      
         }
 
         [HttpGet]

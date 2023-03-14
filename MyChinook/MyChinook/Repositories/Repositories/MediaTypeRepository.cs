@@ -7,7 +7,6 @@ namespace MyChinook.Repositories.Repositories
     public class MediaTypeRepository : Repository<MediaType>, IMediaTypeRepository
     {
         private readonly ApplicationDbContext _db;
-
         public MediaTypeRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;

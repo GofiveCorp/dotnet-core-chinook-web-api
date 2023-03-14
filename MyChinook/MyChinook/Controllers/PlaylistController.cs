@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class PlaylistController : ControllerBase
     {
         protected APIResponse _response;
-        private readonly ILogging _logger;
-        private readonly IPlaylistRepository _dbPlaylist;
         private readonly IMapper _mapper;
+        private readonly ILogging _logger;             
+        private readonly IPlaylistRepository _dbPlaylist;
 
-        public PlaylistController(ILogging logging
-                                  , IPlaylistRepository dbContext
-                                  , IMapper mappingConfig)
+        public PlaylistController(IMapper mappingConfig,
+                                  ILogging logging,
+                                  IPlaylistRepository dbContext)
         {
-            _dbPlaylist = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbPlaylist = dbContext;    
         }
 
         [HttpGet]

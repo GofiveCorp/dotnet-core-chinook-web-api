@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class EmployeeController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IEmployeeRepository _dbEmployee;
-        private readonly IMapper _mapper;
 
-        public EmployeeController(ILogging logging
-                                  , IEmployeeRepository dbContext
-                                  , IMapper mappingConfig)
+        public EmployeeController(IMapper mappingConfig,
+                                  ILogging logging,
+                                  IEmployeeRepository dbContext)
         {
-            _dbEmployee = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbEmployee = dbContext;
         }
 
         [HttpGet]

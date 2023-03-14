@@ -8,7 +8,6 @@ namespace MyChinook.Repositories.Repositories
     public class InvoiceRepository : Repository<Invoice>, IInvoiceRepository
     {
         private readonly ApplicationDbContext _db;
-
         public InvoiceRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;

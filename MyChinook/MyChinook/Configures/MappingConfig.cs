@@ -8,16 +8,16 @@ namespace MyChinook.Configures
     {
         public MappingConfig()
         {
-            CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<Album, AlbumDto>().ReverseMap();
+            CreateMap<Artist, ArtistDto>().ReverseMap();
             CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<Employee, EmployeeDto>().ReverseMap();
+            CreateMap<Genre, GenreDto>().ReverseMap();
             CreateMap<Invoice, InvoiceDto>().ReverseMap();
             CreateMap<InvoiceLine, InvoiceLineDto>().ReverseMap();
-            CreateMap<Artist, ArtistDto>().ReverseMap();
-            CreateMap<Album, AlbumDto>().ReverseMap();
             CreateMap<MediaType, MediaTypeDto>().ReverseMap();
-            CreateMap<Genre, GenreDto>().ReverseMap();
-            CreateMap<Track, TrackDto>().ReverseMap();
             CreateMap<Playlist, PlaylistDto>().ReverseMap();
+            CreateMap<Track, TrackDto>().ReverseMap();
         }
     }
 }

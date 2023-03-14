@@ -2,13 +2,11 @@
 using MyChinook.Models.Entities;
 using MyChinook.Repositories.IRepositories;
 
-
 namespace MyChinook.Repositories.Repositories
 {
     public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
     {
         private readonly ApplicationDbContext _db;
-
         public EmployeeRepository(ApplicationDbContext dbContext): base(dbContext) 
         {
             _db = dbContext;

@@ -21,7 +21,6 @@ namespace MyChinook.Repositories.Repositories
             if (filter != null)
             {
                 query = query.Where(filter);
-
             }
             return await query.ToListAsync();
         }
@@ -36,7 +35,6 @@ namespace MyChinook.Repositories.Repositories
             if (filter != null)
             {
                 query = query.Where(filter);
-
             }
             return await query.FirstOrDefaultAsync();
         }
@@ -57,6 +55,5 @@ namespace MyChinook.Repositories.Repositories
         {
             await _db.SaveChangesAsync();
         }
-
     }
 }

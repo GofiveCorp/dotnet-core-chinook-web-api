@@ -15,18 +15,18 @@ namespace MyChinook.Controllers
     public class InvoiceLineController : ControllerBase
     {
         protected APIResponse _response;
+        private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly IInvoiceLineRepository _dbInvoiceLine;
-        private readonly IMapper _mapper;
 
-        public InvoiceLineController(ILogging logging
-                                  , IInvoiceLineRepository dbContext
-                                  , IMapper mappingConfig)
+        public InvoiceLineController(IMapper mappingConfig,
+                                     ILogging logging,
+                                     IInvoiceLineRepository dbContext)
         {
-            _dbInvoiceLine = dbContext;
+            this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            this._response = new();
+            _dbInvoiceLine = dbContext;
         }
 
         [HttpGet]

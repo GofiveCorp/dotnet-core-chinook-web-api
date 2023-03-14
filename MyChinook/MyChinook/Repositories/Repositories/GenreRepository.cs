@@ -7,7 +7,6 @@ namespace MyChinook.Repositories.Repositories
     public class GenreRepository : Repository<Genre>, IGenreRepository
     {
         private readonly ApplicationDbContext _db;
-
         public GenreRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;
