@@ -9,14 +9,14 @@ namespace MyChinook.Repositories.Repositories
     {
         private readonly ApplicationDbContext _db;
 
-        public InvoiceRepository(ApplicationDbContext dbContext) :base(dbContext) 
+        public InvoiceRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _db = dbContext;
         }
 
-        public Task<List<Invoice>> GetInvoiceByCustomerAsync(int id) 
-        =>  _db.Invoice.Where(u => u.CustomerId == id).ToListAsync();
-       
+        public async Task<List<Invoice>> GetInvoiceByCustomerAsync(int id)
+        => await _db.Invoice.Where(u => u.CustomerId == id).ToListAsync();
+
         public async Task<Invoice> UpdateAsync(Invoice invoice)
         {
 

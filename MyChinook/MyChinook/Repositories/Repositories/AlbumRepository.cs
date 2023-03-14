@@ -14,9 +14,8 @@ namespace MyChinook.Repositories.Repositories
             _db = dbContext;
         }
 
-        public Task<List<Album>> GetAlbumByArtistAsync(int id)
-        
-        =>  _db.Album.Where(a => a.ArtistId == id).ToListAsync();
+        public async Task<List<Album>> GetAlbumByArtistAsync(int id)     
+        => await _db.Album.Where(a => a.ArtistId == id).ToListAsync();
         
         public async Task<Album> UpdateAsync(Album album)
         {
