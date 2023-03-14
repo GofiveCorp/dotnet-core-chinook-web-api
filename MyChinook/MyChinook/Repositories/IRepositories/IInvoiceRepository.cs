@@ -6,5 +6,6 @@ namespace MyChinook.Repositories.IRepositories
     {
         Task<Invoice> UpdateAsync(Invoice invoice);
 
+        Task<List<Invoice>> GetInvoiceByCustomerAsync(int id);
     }
 }

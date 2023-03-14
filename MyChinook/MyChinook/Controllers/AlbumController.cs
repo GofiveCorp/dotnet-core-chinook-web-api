@@ -79,6 +79,7 @@ namespace MyChinook.Controllers
             }
             return _response;
         }
+
         [HttpGet("artist/{id}")]
         public async Task<ActionResult<APIResponse>> GetByArtist(int id)
         {
@@ -217,9 +218,7 @@ namespace MyChinook.Controllers
                     return BadRequest();
                 }
                 patchAlbumDTO.ApplyTo(albumDto, ModelState);
-
                 Album model = _mapper.Map<Album>(albumDto);
-
                 await _dbAlbum.UpdateAsync(model);
                 if (!ModelState.IsValid)
                 {

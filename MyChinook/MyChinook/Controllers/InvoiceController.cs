@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
@@ -73,6 +74,27 @@ namespace MyChinook.Controllers
                 return Ok(_response);
             }
             catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpGet("customer/{id}")]
+        public async Task<ActionResult<APIResponse>> GetByCustomer(int id)
+        {
+            try
+            {
+                IEnumerable<Invoice> invoices = await _dbInvoice.GetInvoiceByCustomerAsync(id);
+                if (invoices == null)
+                {
+                    return NotFound(id);
+                }
+                _response.Result = _mapper.Map<List<InvoiceDto>>(invoices);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessages = new List<string> { ex.ToString() };
