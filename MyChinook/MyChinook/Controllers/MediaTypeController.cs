@@ -123,13 +123,15 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteMediaType(int id)
+        public async Task<ActionResult<APIResponse>> DeleteMediaType(int? id)
         {
             try
             {
-                if (id == 0)
+
+                if (id < 1)
                 {
-                    return BadRequest();
+                    string ms = "ID number can not be less than 1 ";
+                    return BadRequest(ms);
                 }
                 var mediaType = await _dbMediaType.GetAsync(u => u.MediaTypeId == id);
                 if (id == null)

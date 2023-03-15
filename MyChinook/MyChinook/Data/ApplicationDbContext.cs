@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyChinook.Customizes.AddKeyToPlaylistTrack;
 using MyChinook.Models.Entities;
 
 namespace MyChinook.Data
@@ -15,7 +16,7 @@ namespace MyChinook.Data
         public DbSet<InvoiceLine> InvoiceLine { get; set; }
         public DbSet<Artist> Artist { get; set; }
         public DbSet<Album> Album { get; set; }
-        public DbSet<MediaType> MediaType { get; set; }
+        public DbSet<MediaType> MediaType { get; set; } 
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Track> Track { get; set; }
         public DbSet<Playlist> Playlist { get; set; }

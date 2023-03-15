@@ -11,7 +11,7 @@ namespace MyChinook.Models.Entities
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
 
         public DateTime InvoiceDate { get; set; }
         public string? BillingAddress { get; set; }
