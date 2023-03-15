@@ -12,31 +12,30 @@ namespace MyChinook.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlaylistTrackController : ControllerBase
+    public class PlaylistController : ControllerBase
     {
         protected APIResponse _response;
         private readonly IMapper _mapper;
-        private readonly ILogging _logger;             
-        private readonly IPlaylistTrackRepository _dbPlaylistTrack;
-
-        public PlaylistTrackController(IMapper mappingConfig,
+        private readonly ILogging _logger;
+        private readonly IPlaylistRepository _dbPlaylist;
+        public PlaylistController(IMapper mappingConfig,
                                   ILogging logging,
-                                  IPlaylistTrackRepository dbContext)
+                                  IPlaylistRepository dbContext)
         {
             this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            _dbPlaylistTrack = dbContext;    
+            _dbPlaylist = dbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<APIResponse>> GetPlaylistTracks()
+        public async Task<ActionResult<APIResponse>> GetPlaylists()
         {
             try
             {
-                _logger.Log("Get All PlaylistTracks", "");
-                IEnumerable<PlaylistTrack> playlistTracks = await _dbPlaylistTrack.GetAllAsync();
-                _response.Result = _mapper.Map<List<PlaylistTrackDto>>(playlistTracks);
+                _logger.Log("Get All Playlists", "");
+                IEnumerable<Playlist> playlists = await _dbPlaylist.GetAllAsync();
+                _response.Result = _mapper.Map<List<PlaylistDto>>(playlists);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -48,27 +47,27 @@ namespace MyChinook.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetPlaylistTrack")]
+        [HttpGet("{id:int}", Name = "GetPlaylist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> GetPlaylistTrack(int id)
+        public async Task<ActionResult<APIResponse>> GetPlaylist(int id)
         {
             try
             {
                 if (id == 0)
                 {
-                    _logger.Log("Get a PlaylistTrack", "");
+                    _logger.Log("Get a Playlist", "");
                     return BadRequest();
                 }
-                var playlistTrack = await _dbPlaylistTrack.GetAsync(u => u.PlaylistId == id);
+                var playlist = await _dbPlaylist.GetAsync(u => u.PlaylistId == id);
 
-                if (playlistTrack == null)
+                if (playlist == null)
                 {
                     return NotFound();
                 }
-                _response.Result = _mapper.Map<PlaylistTrackDto>(playlistTrack);
+                _response.Result = _mapper.Map<PlaylistDto>(playlist);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -85,25 +84,25 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreatePlaylistTrack([FromBody] PlaylistTrackDto CreatePlaylistTrackDto)
+        public async Task<ActionResult<APIResponse>> CreatePlaylist([FromBody] PlaylistDto CreatePlaylistDto)
         {
             try
             {
 
-                if (CreatePlaylistTrackDto == null)
+                if (CreatePlaylistDto == null)
                 {
-                    return BadRequest(CreatePlaylistTrackDto);
+                    return BadRequest(CreatePlaylistDto);
                 }
-                if (CreatePlaylistTrackDto.PlaylistId > 0)
+                if (CreatePlaylistDto.PlaylistId > 0)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                PlaylistTrack playlistTrack = _mapper.Map<PlaylistTrack>(CreatePlaylistTrackDto);
-                await _dbPlaylistTrack.CreateAsync(playlistTrack);
+                Playlist playlist = _mapper.Map<Playlist>(CreatePlaylistDto);
+                await _dbPlaylist.CreateAsync(playlist);
 
-                _response.Result = _mapper.Map<PlaylistTrackDto>(playlistTrack);
+                _response.Result = _mapper.Map<PlaylistDto>(playlist);
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetPlaylistTrack", new { id = playlistTrack.PlaylistId }, _response);
+                return CreatedAtRoute("GetPlaylist", new { id = playlist.PlaylistId }, _response);
             }
             catch (Exception ex)
             {
@@ -113,7 +112,7 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpDelete("{id:int}", Name = "DeletePlaylistTrack")]
+        [HttpDelete("{id:int}", Name = "DeletePlaylist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -127,12 +126,12 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                var playlistTrack = await _dbPlaylistTrack.GetAsync(u => u.PlaylistId == id);
+                var playlist = await _dbPlaylist.GetAsync(u => u.PlaylistId == id);
                 if (id == null)
                 {
                     return NotFound();
                 }
-                await _dbPlaylistTrack.RemoveAsync(playlistTrack);
+                await _dbPlaylist.RemoveAsync(playlist);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
@@ -145,20 +144,20 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPut("{id:int}", Name = "UpdatePlaylistTrack")]
+        [HttpPut("{id:int}", Name = "UpdatePlaylist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdatePlaylistTrack(int id, [FromBody] PlaylistTrackDto updatePlaylistTrackDto)
+        public async Task<ActionResult<APIResponse>> UpdatePlaylist(int id, [FromBody] PlaylistDto updatePlaylistDto)
         {
             try
             {
-                if (updatePlaylistTrackDto == null || id != updatePlaylistTrackDto.PlaylistId)
+                if (updatePlaylistDto == null || id != updatePlaylistDto.PlaylistId)
                 {
                     return BadRequest();
                 }
-                PlaylistTrack playlistTrack = _mapper.Map<PlaylistTrack>(updatePlaylistTrackDto);
-                await _dbPlaylistTrack.UpdateAsync(playlistTrack);
+                Playlist playlist = _mapper.Map<Playlist>(updatePlaylistDto);
+                await _dbPlaylist.UpdateAsync(playlist);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
@@ -175,27 +174,27 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdatePartialPlaylistTrack(int id, JsonPatchDocument<PlaylistTrackDto> patchPlaylistTrackDTO)
+        public async Task<ActionResult<APIResponse>> UpdatePartialPlaylist(int id, JsonPatchDocument<PlaylistDto> patchPlaylistDTO)
         {
             try
             {
-                if (patchPlaylistTrackDTO == null || id == 0)
+                if (patchPlaylistDTO == null || id == 0)
                 {
                     return BadRequest();
                 }
-                var playlistTrack = await _dbPlaylistTrack.GetAsync(u => u.PlaylistId == id, tracked: false);
+                var playlist = await _dbPlaylist.GetAsync(u => u.PlaylistId == id, tracked: false);
 
-                PlaylistTrackDto playlistTrackDto = _mapper.Map<PlaylistTrackDto>(playlistTrack);
+                PlaylistDto playlistDto = _mapper.Map<PlaylistDto>(playlist);
 
-                if (playlistTrack == null)
+                if (playlist == null)
                 {
                     return BadRequest();
                 }
-                patchPlaylistTrackDTO.ApplyTo(playlistTrackDto, ModelState);
+                patchPlaylistDTO.ApplyTo(playlistDto, ModelState);
 
-                PlaylistTrack model = _mapper.Map<PlaylistTrack>(playlistTrackDto);
+                Playlist model = _mapper.Map<Playlist>(playlistDto);
 
-                await _dbPlaylistTrack.UpdateAsync(model);
+                await _dbPlaylist.UpdateAsync(model);
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
