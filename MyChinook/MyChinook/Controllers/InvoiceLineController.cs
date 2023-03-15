@@ -139,7 +139,7 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteInvoiceLine(int? id)
+        public async Task<ActionResult<APIResponse>> DeleteInvoiceLine(int id)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace MyChinook.Controllers
                     return BadRequest();
                 }
                 var invoiceLine = await _dbInvoiceLine.GetAsync(u => u.InvoiceLineId == id);
-                if (id == null)
+                if (invoiceLine == null)
                 {
                     return NotFound();
                 }

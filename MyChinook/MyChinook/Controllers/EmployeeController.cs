@@ -122,7 +122,7 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteEmployee(int? id)
+        public async Task<ActionResult<APIResponse>> DeleteEmployee(int id)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace MyChinook.Controllers
                     return BadRequest();
                 }
                 var employee = await _dbEmployee.GetAsync(u => u.EmployeeId == id);
-                if (id == null)
+                if (employee == null)
                 {
                     return NotFound();
                 }
