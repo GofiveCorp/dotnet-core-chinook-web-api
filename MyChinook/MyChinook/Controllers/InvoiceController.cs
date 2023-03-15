@@ -148,7 +148,7 @@ namespace MyChinook.Controllers
                     return BadRequest();
                 }
                 var invoice = await _dbInvoice.GetAsync(u => u.InvoiceId == id);
-                if (id == null)
+                if (invoice == null)
                 {
                     return NotFound();
                 }

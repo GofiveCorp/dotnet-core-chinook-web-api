@@ -90,7 +90,6 @@ namespace MyChinook.Controllers
                 _response.ErrorsMessages = new List<string>() { ex.ToString() };
                 return _response;
             }
-
         }
     }
 }

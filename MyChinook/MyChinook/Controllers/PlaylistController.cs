@@ -117,7 +117,7 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeletePlaylist(int? id)
+        public async Task<ActionResult<APIResponse>> DeletePlaylist(int id)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace MyChinook.Controllers
                     return BadRequest();
                 }
                 var playlist = await _dbPlaylist.GetAsync(u => u.PlaylistId == id);
-                if (id == null)
+                if (playlist == null)
                 {
                     return NotFound();
                 }
