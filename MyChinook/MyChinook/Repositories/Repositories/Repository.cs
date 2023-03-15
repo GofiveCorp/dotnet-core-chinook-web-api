@@ -36,7 +36,9 @@ namespace MyChinook.Repositories.Repositories
             {
                 query = query.Where(filter);
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return await query.FirstOrDefaultAsync();
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public async Task CreateAsync(T entity)

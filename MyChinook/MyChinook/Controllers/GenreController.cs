@@ -123,7 +123,7 @@ namespace MyChinook.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteGenre(int id)
+        public async Task<ActionResult<APIResponse>> DeleteGenre(int? id)
         {
             try
             {

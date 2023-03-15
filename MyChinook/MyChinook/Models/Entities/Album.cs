@@ -11,7 +11,7 @@ namespace MyChinook.Models.Entities
 
         [ForeignKey("Artist")]
         public int ArtistId { get; set; }
-        public Artist Artist { get; set; }
+        public Artist Artist { get; set; } = null!;
 
         public string Title { get; set; } = null!;
     }
