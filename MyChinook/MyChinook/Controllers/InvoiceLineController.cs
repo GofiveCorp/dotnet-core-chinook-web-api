@@ -80,7 +80,7 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpGet("invoice/{id}")]       
+        [HttpGet("invoice/{id}")]
         public async Task<ActionResult<APIResponse>> GetByInvoice(int id)
         {
             try
@@ -97,7 +97,7 @@ namespace MyChinook.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorsMessages = new List<string> { ex.ToString()};
+                _response.ErrorsMessages = new List<string> { ex.ToString() };
             }
             return _response;
         }

@@ -89,7 +89,7 @@ namespace MyChinook.Controllers
                 if (albums == null)
                 {
                     return NotFound();
-                }              
+                }
                 _response.Result = _mapper.Map<List<AlbumDto>>(albums);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);

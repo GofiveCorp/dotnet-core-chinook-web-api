@@ -14,19 +14,19 @@ namespace MyChinook.Controllers
     [ApiController]
     public class TrackController : ControllerBase
     {
-        protected APIResponse _response;       
+        protected APIResponse _response;
         private readonly IMapper _mapper;
         private readonly ILogging _logger;
         private readonly ITrackRepository _dbTrack;
 
-        public TrackController( IMapper mappingConfig,
+        public TrackController(IMapper mappingConfig,
                                 ILogging logging,
                                 ITrackRepository dbContext)
         {
             this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            _dbTrack = dbContext;                   
+            _dbTrack = dbContext;
         }
 
         [HttpGet]

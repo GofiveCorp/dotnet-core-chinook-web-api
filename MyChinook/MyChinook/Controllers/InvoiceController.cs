@@ -93,7 +93,8 @@ namespace MyChinook.Controllers
                 _response.Result = _mapper.Map<List<InvoiceDto>>(invoices);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessages = new List<string> { ex.ToString() };
