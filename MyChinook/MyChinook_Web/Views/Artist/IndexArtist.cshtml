@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MyChinook_Web.Models.Dtos.ArtistDto>
+<br />
+<div class=" container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Artist List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-controller="Artist" asp-action="CreateArtist" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Create New Artist</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

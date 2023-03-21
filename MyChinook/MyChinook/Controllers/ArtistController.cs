@@ -80,7 +80,7 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPost]
+        [HttpPost(Name ="CreateArtist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

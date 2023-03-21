@@ -21,6 +21,7 @@ namespace MyChinook.Data
         public DbSet<Track> Track { get; set; }
         public DbSet<Playlist> Playlist { get; set; }
         public DbSet<PlaylistTrack> PlaylistTrack { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
