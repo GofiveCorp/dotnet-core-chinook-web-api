@@ -9,6 +9,6 @@ namespace MyChinook.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MediaTypeId { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } 
     }
 }
