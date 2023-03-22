@@ -33,7 +33,7 @@ namespace MyChinook.Data
                     FirstName = "Andrew",
                     LastName = "Adams",
                     Title = "General Manager",
-                    ReportsTo = null,
+                    ReportsTo = 9,
                     Address = "11120 Jasper Ave NW",
                     City = "Edmonton",
                     State = "AB",

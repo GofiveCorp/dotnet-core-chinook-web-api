@@ -8,6 +8,6 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PlaylistId { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MyChinook_Web.Models.Dtos.ArtistDto>
 <br />
-<div class=" container p-4 border">
+<div class="container p-4 border">
     <div class="row pb-2">
         <div class="col">
             <h1 class="text-primary">Artist List</h1>
@@ -19,10 +19,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model)//Show data to page from following items below
             {
                 <tr>
                     <td>@item.Name</td>
+                    <td>
+                        <a asp-controller="Artist" asp-action="UpdateArtist" asp-route-artistId="@item.ArtistId" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                        <a asp-controller="Artist" asp-action="DeleteArtist" asp-route-artistId="@item.ArtistId" class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                    </td>   
                 </tr>
             }
         </tbody>

@@ -8,6 +8,7 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ArtistId { get; set; }
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } 
+        
     }
 }
