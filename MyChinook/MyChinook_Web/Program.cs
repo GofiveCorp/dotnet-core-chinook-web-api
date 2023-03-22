@@ -9,7 +9,9 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddHttpClient<IArtistService, ArtistService>();
+builder.Services.AddHttpClient<IAlbumService, AlbumService>();
 builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 var app = builder.Build();
 
