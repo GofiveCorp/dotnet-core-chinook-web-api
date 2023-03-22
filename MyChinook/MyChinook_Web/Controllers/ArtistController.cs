@@ -48,7 +48,8 @@ namespace MyChinook_Web.Controllers
         }
 
         public async Task<IActionResult> UpdateArtist(int artistId)
-        {           
+        {   
+            //recieve data after update
             var response = await _artistService.GetAsync<APIResponse>(artistId);
             if (response != null && response.IsSuccess)
             {
@@ -69,6 +70,30 @@ namespace MyChinook_Web.Controllers
                 {
                     return RedirectToAction(nameof(IndexArtist));
                 }
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteArtist(int artistId)
+        {
+            //recieve data after update
+            var response = await _artistService.GetAsync<APIResponse>(artistId);
+            if (response != null && response.IsSuccess)
+            {
+                ArtistDto model = JsonConvert.DeserializeObject<ArtistDto>(Convert.ToString(response.Result));
+                return View(model);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteArtist(ArtistDto model)
+        {
+            var response = await _artistService.DeleteAsync<APIResponse>(model.ArtistId);
+            if (response != null && response.IsSuccess)
+            {                  
+                return RedirectToAction(nameof(IndexArtist));       
             }
             return View(model);
         }
