@@ -40,7 +40,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Album");
+                    b.ToTable("Album", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Artist", b =>
@@ -56,7 +56,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Artist");
+                    b.ToTable("Artist", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Customer", b =>
@@ -105,7 +105,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Employee", b =>
@@ -160,7 +160,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
 
                     b.HasData(
                         new
@@ -268,7 +268,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genre", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Invoice", b =>
@@ -307,7 +307,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoice", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.InvoiceLine", b =>
@@ -336,7 +336,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("TrackID");
 
-                    b.ToTable("InvoiceLine");
+                    b.ToTable("InvoiceLine", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.MediaType", b =>
@@ -352,7 +352,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("MediaTypeId");
 
-                    b.ToTable("MediaType");
+                    b.ToTable("MediaType", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Playlist", b =>
@@ -368,7 +368,7 @@ namespace MyChinook.Migrations
 
                     b.HasKey("PlaylistId");
 
-                    b.ToTable("Playlist");
+                    b.ToTable("Playlist", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.PlaylistTrack", b =>
@@ -383,7 +383,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("TrackId");
 
-                    b.ToTable("PlaylistTrack");
+                    b.ToTable("PlaylistTrack", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Track", b =>
@@ -426,7 +426,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("MediaTypeId");
 
-                    b.ToTable("Track");
+                    b.ToTable("Track", (string)null);
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Album", b =>

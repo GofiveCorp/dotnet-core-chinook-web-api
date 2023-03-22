@@ -6,7 +6,7 @@ namespace MyChinook_Web.Models.Dtos
     {      
         public int TrackId { get; set; }
         [Required]
-        public string Name { get; set; } = null!;      
+        public string Name { get; set; } 
         public int MediaTypeId { get; set; }       
         public int AlbumId { get; set; }        
         public int GenreId { get; set; } 

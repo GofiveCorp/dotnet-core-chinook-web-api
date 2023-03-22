@@ -6,6 +6,6 @@ namespace MyChinook_Web.Models.Dtos
     {      
         public int MediaTypeId { get; set; }
         [Required]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
     }
 }

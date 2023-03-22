@@ -7,9 +7,9 @@ namespace MyChinook_Web.Models.Dtos
         public int EmployeeId { get; set; }
         [Required]
         [MaxLength(50)]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } 
         [Required]
-        public string LastName { get; set; } = null!;
+        public string LastName { get; set; } 
         public string Title { get; set; }
         public int ReportsTo { get; set; }
         public DateTime BirthDate { get; set; }
