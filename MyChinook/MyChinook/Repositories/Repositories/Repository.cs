@@ -15,7 +15,7 @@ namespace MyChinook.Repositories.Repositories
             this.DbSet = _db.Set<T>();
         }
 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = DbSet;
             if (filter != null)
@@ -25,7 +25,7 @@ namespace MyChinook.Repositories.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
         {
             IQueryable<T> query = DbSet;
             if (!tracked)
