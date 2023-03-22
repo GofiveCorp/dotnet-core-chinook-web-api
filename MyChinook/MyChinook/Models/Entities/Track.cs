@@ -11,20 +11,20 @@ namespace MyChinook.Models.Entities
 
         [ForeignKey("MediaType")]
         public int MediaTypeId { get; set; }
-        public MediaType MediaType { get; set; } = null!;
+        public MediaType MediaType { get; set; } 
 
         [ForeignKey("Album")]
         public int AlbumId { get; set; }
-        public Album Album { get; set; } = null!;
+        public Album Album { get; set; } 
 
         [ForeignKey("Genre")]
         public int GenreId { get; set; }
-        public Genre Genre { get; set; } = null!;
+        public Genre Genre { get; set; } 
 
-        public string Name { get; set; } = null!;
-        public string? Composer { get; set; }
+        public string Name { get; set; } 
+        public string Composer { get; set; }
         public int Milliseconds { get; set; }
-        public int? Bytes { get; set; }
+        public int Bytes { get; set; }
         public decimal UnitPrice { get; set; }       
     }
 }

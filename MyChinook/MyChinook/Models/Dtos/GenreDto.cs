@@ -6,6 +6,6 @@ namespace MyChinook.Models.Dtos
     {
         public int GenreId { get; set; }
         [Required]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
     }
 }

@@ -11,11 +11,11 @@ namespace MyChinook.Models.Entities
 
         [ForeignKey("Invoice")]
         public int InvoiceId { get; set; }
-        public Invoice? Invoice { get; set; }
+        public Invoice Invoice { get; set; }
 
         [ForeignKey("Track")]
         public int TrackID { get; set; }
-        public Track? Track { get; set; }
+        public Track Track { get; set; }
 
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
