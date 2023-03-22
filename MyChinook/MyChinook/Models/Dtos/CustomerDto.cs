@@ -19,6 +19,6 @@ namespace MyChinook.Models.Dtos
         public string Fax { get; set; }
         [Required]
         public string Email { get; set; } 
-        public int? SupportRepId { get; set; }
+        public int SupportRepId { get; set; }
     }
 }
