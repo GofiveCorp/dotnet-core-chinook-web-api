@@ -5,7 +5,7 @@ namespace MyChinook.Models.Dtos
     public class TrackDto
     {      
         public int TrackId { get; set; }
-        [Required]
+        
         public string Name { get; set; }     
         public int MediaTypeId { get; set; }       
         public int AlbumId { get; set; }        
@@ -14,5 +14,6 @@ namespace MyChinook.Models.Dtos
         public int Milliseconds { get; set; }
         public int Bytes { get; set; }
         public decimal UnitPrice { get; set; }
+        public IList<PlaylistTrackDto> PlaylistTracks { get; set; }
     }
 }

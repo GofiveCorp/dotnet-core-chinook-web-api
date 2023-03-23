@@ -5,9 +5,9 @@ namespace MyChinook.Models.Dtos
     public class CustomerDto
     {
         public int CustomerId { get; set; }
-        [Required]
+      
         public string FirstName { get; set; } 
-        [Required]
+      
         public string LastName { get; set; } 
         public string Company { get; set; }
         public string Address { get; set; }
@@ -17,7 +17,7 @@ namespace MyChinook.Models.Dtos
         public string PostalCode { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-        [Required]
+  
         public string Email { get; set; } 
         public int SupportRepId { get; set; }
     }

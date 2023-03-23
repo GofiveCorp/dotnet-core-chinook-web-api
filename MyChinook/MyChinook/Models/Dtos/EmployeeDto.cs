@@ -5,10 +5,9 @@ namespace MyChinook.Models.Dtos
     public class EmployeeDto
     {
         public int EmployeeId { get; set; }
-        [Required]
-        [MaxLength(50)]
+  
         public string FirstName { get; set; } 
-        [Required]
+    
         public string LastName { get; set; } 
         public string Title { get; set; }
         public int ReportsTo { get; set; }

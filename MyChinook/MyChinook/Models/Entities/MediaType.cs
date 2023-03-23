@@ -8,7 +8,7 @@ namespace MyChinook.Models.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MediaTypeId { get; set; }
-
-        public string Name { get; set; } 
+        public string Name { get; set; }
+        public ICollection<Track> Tracks { get; set; } = new HashSet<Track>();
     }
 }

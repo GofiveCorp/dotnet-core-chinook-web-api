@@ -9,5 +9,6 @@ namespace MyChinook.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PlaylistId { get; set; }
         public string Name { get; set; }
+        public ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new HashSet<PlaylistTrack>();
     }
 }
