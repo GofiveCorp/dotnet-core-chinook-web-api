@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Albums", "");
-                IEnumerable<Album> albums = await _dbAlbum.GetAllAsync();
+                IEnumerable<Album> albums = await _dbAlbum.GetAllAsync(includeProperties : "Artist");
                 _response.Result = _mapper.Map<List<AlbumDto>>(albums);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
