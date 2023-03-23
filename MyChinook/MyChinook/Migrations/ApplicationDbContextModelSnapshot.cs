@@ -34,13 +34,15 @@ namespace MyChinook.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("AlbumId");
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Album", (string)null);
+                    b.ToTable("Album");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Artist", b =>
@@ -52,11 +54,12 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArtistId"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Artist", (string)null);
+                    b.ToTable("Artist");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Customer", b =>
@@ -68,44 +71,60 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Company")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("SupportRepId")
                         .HasColumnType("int");
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer", (string)null);
+                    b.HasIndex("SupportRepId");
+
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Employee", b =>
@@ -117,142 +136,65 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ReportsTo")
                         .HasColumnType("int");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Employee", (string)null);
+                    b.HasIndex("ReportsTo");
 
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = 1,
-                            Address = "11120 Jasper Ave NW",
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Edmonton",
-                            Country = "Canada",
-                            Email = "andrew@chinookcorp.com",
-                            Fax = "+1 (780) 428-3457",
-                            FirstName = "Andrew",
-                            HireDate = new DateTime(2023, 3, 22, 9, 44, 58, 466, DateTimeKind.Local).AddTicks(4982),
-                            LastName = "Adams",
-                            Phone = "+1 (780) 428-9482",
-                            PostalCode = "T5K 2N1",
-                            ReportsTo = 9,
-                            State = "AB",
-                            Title = "General Manager"
-                        },
-                        new
-                        {
-                            EmployeeId = 2,
-                            Address = "825 8 Ave SW",
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Calgary",
-                            Country = "Canada",
-                            Email = "nancy@chinookcorp.com",
-                            Fax = "+1 (403) 262-3322",
-                            FirstName = "Nancy",
-                            HireDate = new DateTime(2023, 3, 22, 9, 44, 58, 466, DateTimeKind.Local).AddTicks(4994),
-                            LastName = "Edwards",
-                            Phone = "+1 (403) 262-3443",
-                            PostalCode = "T2P 2T3",
-                            ReportsTo = 1,
-                            State = "AB",
-                            Title = "Sales Manager"
-                        },
-                        new
-                        {
-                            EmployeeId = 3,
-                            Address = "1111 6 Ave SW",
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Edmonton",
-                            Country = "Canada",
-                            Email = "jane@chinookcorp.com",
-                            Fax = "+1 (403) 262-6712",
-                            FirstName = "Jane",
-                            HireDate = new DateTime(2023, 3, 22, 9, 44, 58, 466, DateTimeKind.Local).AddTicks(4996),
-                            LastName = "Peacock",
-                            Phone = "+1 (403) 262-3443",
-                            PostalCode = "T2P 5M5",
-                            ReportsTo = 2,
-                            State = "AB",
-                            Title = "Sales Support Agent"
-                        },
-                        new
-                        {
-                            EmployeeId = 4,
-                            Address = "683 10 Street SW",
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Edmonton",
-                            Country = "Canada",
-                            Email = "margaret@chinookcorp.com",
-                            Fax = "+1 (403) 263-4289",
-                            FirstName = "Margaret",
-                            HireDate = new DateTime(2023, 3, 22, 9, 44, 58, 466, DateTimeKind.Local).AddTicks(4999),
-                            LastName = "Park",
-                            Phone = "+1 (403) 263-4423",
-                            PostalCode = "T2P 5G3",
-                            ReportsTo = 2,
-                            State = "AB",
-                            Title = "Sales Support Agent"
-                        },
-                        new
-                        {
-                            EmployeeId = 5,
-                            Address = "7727B 41 Ave",
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Edmonton",
-                            Country = "Canada",
-                            Email = "steve@chinookcorp.com",
-                            Fax = "+1 (780) 836-9543",
-                            FirstName = "Steve",
-                            HireDate = new DateTime(2023, 3, 22, 9, 44, 58, 466, DateTimeKind.Local).AddTicks(5001),
-                            LastName = "Johnson",
-                            Phone = "+1 (780) 836-9987",
-                            PostalCode = "T3B 1Y7",
-                            ReportsTo = 2,
-                            State = "AB",
-                            Title = "Sales Support Agent"
-                        });
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Genre", b =>
@@ -264,11 +206,12 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("Genre", (string)null);
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Invoice", b =>
@@ -280,19 +223,24 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceId"));
 
                     b.Property<string>("BillingAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BillingCity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("BillingCountry")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("BillingPostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("BillingState")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -307,7 +255,7 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Invoice", (string)null);
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.InvoiceLine", b =>
@@ -324,7 +272,7 @@ namespace MyChinook.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrackID")
+                    b.Property<int>("TrackId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
@@ -334,9 +282,9 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.HasIndex("TrackID");
+                    b.HasIndex("TrackId");
 
-                    b.ToTable("InvoiceLine", (string)null);
+                    b.ToTable("InvoiceLine");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.MediaType", b =>
@@ -348,11 +296,12 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MediaTypeId"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("MediaTypeId");
 
-                    b.ToTable("MediaType", (string)null);
+                    b.ToTable("MediaType");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Playlist", b =>
@@ -364,11 +313,13 @@ namespace MyChinook.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlaylistId"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("PlaylistId");
 
-                    b.ToTable("Playlist", (string)null);
+                    b.ToTable("Playlist");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.PlaylistTrack", b =>
@@ -381,9 +332,11 @@ namespace MyChinook.Migrations
 
                     b.HasKey("PlaylistId", "TrackId");
 
+                    b.HasIndex("PlaylistId");
+
                     b.HasIndex("TrackId");
 
-                    b.ToTable("PlaylistTrack", (string)null);
+                    b.ToTable("PlaylistTrack");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Track", b =>
@@ -401,7 +354,8 @@ namespace MyChinook.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Composer")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
@@ -413,7 +367,9 @@ namespace MyChinook.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
@@ -426,26 +382,47 @@ namespace MyChinook.Migrations
 
                     b.HasIndex("MediaTypeId");
 
-                    b.ToTable("Track", (string)null);
+                    b.ToTable("Track");
                 });
 
             modelBuilder.Entity("MyChinook.Models.Entities.Album", b =>
                 {
                     b.HasOne("MyChinook.Models.Entities.Artist", "Artist")
-                        .WithMany()
+                        .WithMany("Albums")
                         .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Artist");
                 });
 
+            modelBuilder.Entity("MyChinook.Models.Entities.Customer", b =>
+                {
+                    b.HasOne("MyChinook.Models.Entities.Employee", "SupportRep")
+                        .WithMany("Customers")
+                        .HasForeignKey("SupportRepId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SupportRep");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Employee", b =>
+                {
+                    b.HasOne("MyChinook.Models.Entities.Employee", "Manager")
+                        .WithMany("DirectReports")
+                        .HasForeignKey("ReportsTo")
+                        .IsRequired();
+
+                    b.Navigation("Manager");
+                });
+
             modelBuilder.Entity("MyChinook.Models.Entities.Invoice", b =>
                 {
                     b.HasOne("MyChinook.Models.Entities.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Invoices")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -454,15 +431,15 @@ namespace MyChinook.Migrations
             modelBuilder.Entity("MyChinook.Models.Entities.InvoiceLine", b =>
                 {
                     b.HasOne("MyChinook.Models.Entities.Invoice", "Invoice")
-                        .WithMany()
+                        .WithMany("InvoiceLines")
                         .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MyChinook.Models.Entities.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("InvoiceLines")
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Invoice");
@@ -473,15 +450,15 @@ namespace MyChinook.Migrations
             modelBuilder.Entity("MyChinook.Models.Entities.PlaylistTrack", b =>
                 {
                     b.HasOne("MyChinook.Models.Entities.Playlist", "Playlist")
-                        .WithMany()
+                        .WithMany("PlaylistTracks")
                         .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MyChinook.Models.Entities.Track", "Track")
-                        .WithMany()
+                        .WithMany("PlaylistTracks")
                         .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Playlist");
@@ -492,21 +469,21 @@ namespace MyChinook.Migrations
             modelBuilder.Entity("MyChinook.Models.Entities.Track", b =>
                 {
                     b.HasOne("MyChinook.Models.Entities.Album", "Album")
-                        .WithMany()
+                        .WithMany("Tracks")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyChinook.Models.Entities.Genre", "Genre")
-                        .WithMany()
+                        .WithMany("Tracks")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyChinook.Models.Entities.MediaType", "MediaType")
-                        .WithMany()
+                        .WithMany("Tracks")
                         .HasForeignKey("MediaTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Album");
@@ -514,6 +491,55 @@ namespace MyChinook.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("MediaType");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Album", b =>
+                {
+                    b.Navigation("Tracks");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Artist", b =>
+                {
+                    b.Navigation("Albums");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Customer", b =>
+                {
+                    b.Navigation("Invoices");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Employee", b =>
+                {
+                    b.Navigation("Customers");
+
+                    b.Navigation("DirectReports");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Genre", b =>
+                {
+                    b.Navigation("Tracks");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Invoice", b =>
+                {
+                    b.Navigation("InvoiceLines");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.MediaType", b =>
+                {
+                    b.Navigation("Tracks");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Playlist", b =>
+                {
+                    b.Navigation("PlaylistTracks");
+                });
+
+            modelBuilder.Entity("MyChinook.Models.Entities.Track", b =>
+                {
+                    b.Navigation("InvoiceLines");
+
+                    b.Navigation("PlaylistTracks");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,12 +7,9 @@ namespace MyChinook.Models.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int InvoiceId { get; set; }
-
-        [ForeignKey("Customer")]
+        public int InvoiceId { get; set; }      
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } 
-
         public DateTime InvoiceDate { get; set; }
         public string BillingAddress { get; set; }
         public string BillingCity { get; set; }
@@ -20,5 +17,6 @@ namespace MyChinook.Models.Entities
         public string BillingCountry { get; set; }
         public string BillingPostalCode { get; set; }
         public decimal Total { get; set; }
+        public ICollection<InvoiceLine> InvoiceLines { get; set; } = new HashSet<InvoiceLine>();
     }
 }

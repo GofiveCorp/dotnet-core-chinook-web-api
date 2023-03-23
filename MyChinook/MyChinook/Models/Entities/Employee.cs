@@ -22,6 +22,11 @@ namespace MyChinook.Models.Entities
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+
+        public Employee Manager { get; set; }
+        public ICollection<Employee> DirectReports { get; set; } = new HashSet<Employee>();
+        public ICollection<Customer> Customers { get; set; } = new HashSet<Customer>();
+
     }
 }
 
