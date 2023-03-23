@@ -8,5 +8,6 @@ namespace MyChinook_Web.Models.Dtos
         [Required]
         public string Title { get; set; }  
         public int ArtistId { get; set; }
+        public ArtistDto Artist { get; set; }
     }
 }

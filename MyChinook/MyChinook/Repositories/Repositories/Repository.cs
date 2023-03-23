@@ -11,21 +11,26 @@ namespace MyChinook.Repositories.Repositories
         internal DbSet<T> DbSet;
         public Repository(ApplicationDbContext dbContext)
         {
-            _db = dbContext;
+            _db = dbContext;    
             this.DbSet = _db.Set<T>();
         }
 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = DbSet;
             if (filter != null)
             {
                 query = query.Where(filter);
             }
+            if (includeProperties != null)
+            {
+                foreach(var prop in includeProperties.Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
+                query = query.Include(prop);
+            }
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true, string? includeProperties = null)
         {
             IQueryable<T> query = DbSet;
             if (!tracked)
@@ -35,6 +40,13 @@ namespace MyChinook.Repositories.Repositories
             if (filter != null)
             {
                 query = query.Where(filter);
+            }
+            if (includeProperties != null)
+            {
+                foreach (var prop in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(prop);
+                }
             }
 
             return await query.FirstOrDefaultAsync();
