@@ -30,7 +30,6 @@ namespace MyChinook.Customizes.ChangesInTable
                   .WithMany(p => p.DirectReports)
                   .HasForeignKey(d => d.ReportsTo)
                   .OnDelete(DeleteBehavior.ClientSetNull);
-
         }
     }
 }
