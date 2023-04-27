@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All InvoiceLines", "");
-                IEnumerable<InvoiceLine> invoiceLines = await _dbInvoiceLine.GetAllAsync();
+                var invoiceLines = await _dbInvoiceLine.GetAllAsync();
                 _response.Result = _mapper.Map<List<InvoiceLineDto>>(invoiceLines);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -85,7 +85,7 @@ namespace MyChinook.Controllers
         {
             try
             {
-                IEnumerable<InvoiceLine> invoiceLines = await _dbInvoiceLine.GetInvoiceLineByInvoiceAsync(id);
+                var invoiceLines = await _dbInvoiceLine.GetInvoiceLineByInvoiceAsync(id);
                 if (invoiceLines == null)
                 {
                     return NotFound();
@@ -119,7 +119,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                InvoiceLine invoiceLine = _mapper.Map<InvoiceLine>(CreateInvoiceLineDto);
+                var invoiceLine = _mapper.Map<InvoiceLine>(CreateInvoiceLineDto);
                 await _dbInvoiceLine.CreateAsync(invoiceLine);
 
                 _response.Result = _mapper.Map<InvoiceLineDto>(invoiceLine);
@@ -177,7 +177,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                InvoiceLine invoiceLine = _mapper.Map<InvoiceLine>(updateInvoiceLineDto);
+                var invoiceLine = _mapper.Map<InvoiceLine>(updateInvoiceLineDto);
                 await _dbInvoiceLine.UpdateAsync(invoiceLine);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -205,7 +205,7 @@ namespace MyChinook.Controllers
                 }
                 var invoiceLine = await _dbInvoiceLine.GetAsync(u => u.InvoiceLineId == id, tracked: false);
 
-                InvoiceLineDto invoiceLineDto = _mapper.Map<InvoiceLineDto>(invoiceLine);
+                var invoiceLineDto = _mapper.Map<InvoiceLineDto>(invoiceLine);
 
                 if (invoiceLine == null)
                 {
@@ -213,7 +213,7 @@ namespace MyChinook.Controllers
                 }
                 patchInvoiceLineDTO.ApplyTo(invoiceLineDto, ModelState);
 
-                InvoiceLine model = _mapper.Map<InvoiceLine>(invoiceLineDto);
+                var model = _mapper.Map<InvoiceLine>(invoiceLineDto);
 
                 await _dbInvoiceLine.UpdateAsync(model);
                 if (!ModelState.IsValid)

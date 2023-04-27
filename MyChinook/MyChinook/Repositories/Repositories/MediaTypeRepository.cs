@@ -1,20 +1,19 @@
-﻿using MyChinook.Data;
-using MyChinook.Models.Entities;
+﻿using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
     public class MediaTypeRepository : Repository<MediaType>, IMediaTypeRepository
     {
-        private readonly ApplicationDbContext _db;
-        public MediaTypeRepository(ApplicationDbContext dbContext) : base(dbContext)
+        private readonly MyChinookContext _db;
+        public MediaTypeRepository(MyChinookContext dbContext) : base(dbContext)
         {
             _db = dbContext;
         }
 
         public async Task<MediaType> UpdateAsync(MediaType mediaType)
         {
-            _db.MediaType.Update(mediaType);
+            _db.MediaTypes.Update(mediaType);
             await _db.SaveChangesAsync();
             return mediaType;
         }

@@ -15,11 +15,51 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
-         "Name": "[dbo].[FileCategories]",
+         "Name": "[dbo].[Album]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Artist]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Customer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Genre]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Invoice]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[InvoiceLine]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MediaType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Playlist]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PlaylistTrack]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Track]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "TALENAKLE.MyChinook",
+   "UiHint": "talenakle.Chinook.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
@@ -28,7 +68,7 @@
    "UseFluentApiOnly": true,
    "UseHandleBars": false,
    "UseHierarchyId": false,
-   "UseInflector": false,
+   "UseInflector": true,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,
    "UseNoDefaultConstructor": false,

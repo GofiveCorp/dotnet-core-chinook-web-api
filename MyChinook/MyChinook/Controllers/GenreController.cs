@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Genres", "");
-                IEnumerable<Genre> genres = await _dbGenre.GetAllAsync();
+                var genres = await _dbGenre.GetAllAsync();
                 _response.Result = _mapper.Map<List<GenreDto>>(genres);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -102,7 +102,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Genre genre = _mapper.Map<Genre>(CreateGenreDto);
+                var genre = _mapper.Map<Genre>(CreateGenreDto);
                 //Update to Database (Entity)
                 await _dbGenre.CreateAsync(genre);
                 //Response to API (Dto)
@@ -161,7 +161,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Genre genre = _mapper.Map<Genre>(updateGenreDto);
+                var genre = _mapper.Map<Genre>(updateGenreDto);
                 await _dbGenre.UpdateAsync(genre);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -189,7 +189,7 @@ namespace MyChinook.Controllers
                 }
                 var genre = await _dbGenre.GetAsync(u => u.GenreId == id, tracked: false);
 
-                GenreDto genreDto = _mapper.Map<GenreDto>(genre);
+                var genreDto = _mapper.Map<GenreDto>(genre);
 
                 if (genre == null)
                 {
@@ -197,7 +197,7 @@ namespace MyChinook.Controllers
                 }
                 patchGenreDTO.ApplyTo(genreDto, ModelState);
 
-                Genre model = _mapper.Map<Genre>(genreDto);
+                var model = _mapper.Map<Genre>(genreDto);
 
                 await _dbGenre.UpdateAsync(model);
                 if (!ModelState.IsValid)

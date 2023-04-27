@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Artists", "");
-                IEnumerable<Artist> artists = await _dbArtist.GetAllAsync();
+                var artists = await _dbArtist.GetAllAsync();
                 _response.Result = _mapper.Map<List<ArtistDto>>(artists);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -80,7 +80,7 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPost(Name ="CreateArtist")]
+        [HttpPost(Name = "CreateArtist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -102,7 +102,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Artist artist = _mapper.Map<Artist>(CreateArtistDto);
+                var artist = _mapper.Map<Artist>(CreateArtistDto);
                 await _dbArtist.CreateAsync(artist);
 
                 _response.Result = _mapper.Map<ArtistDto>(artist);
@@ -161,7 +161,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Artist artist = _mapper.Map<Artist>(updateArtistDto);
+                var artist = _mapper.Map<Artist>(updateArtistDto);
                 await _dbArtist.UpdateAsync(artist);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -189,7 +189,7 @@ namespace MyChinook.Controllers
                 }
                 var artist = await _dbArtist.GetAsync(u => u.ArtistId == id, tracked: false);
 
-                ArtistDto artistDto = _mapper.Map<ArtistDto>(artist);
+                var artistDto = _mapper.Map<ArtistDto>(artist);
 
                 if (artist == null)
                 {
@@ -197,7 +197,7 @@ namespace MyChinook.Controllers
                 }
                 patchArtistDTO.ApplyTo(artistDto, ModelState);
 
-                Artist model = _mapper.Map<Artist>(artistDto);
+                var model = _mapper.Map<Artist>(artistDto);
 
                 await _dbArtist.UpdateAsync(model);
                 if (!ModelState.IsValid)

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All MediaTypes", "");
-                IEnumerable<MediaType> mediaTypes = await _dbMediaType.GetAllAsync();
+                var mediaTypes = await _dbMediaType.GetAllAsync();
                 _response.Result = _mapper.Map<List<MediaTypeDto>>(mediaTypes);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -102,7 +102,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                MediaType mediaType = _mapper.Map<MediaType>(CreateMediaTypeDto);
+                var mediaType = _mapper.Map<MediaType>(CreateMediaTypeDto);
                 //Update to Database
                 await _dbMediaType.CreateAsync(mediaType);
                 //Response to API
@@ -163,7 +163,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                MediaType mediaType = _mapper.Map<MediaType>(updateMediaTypeDto);
+                var mediaType = _mapper.Map<MediaType>(updateMediaTypeDto);
                 await _dbMediaType.UpdateAsync(mediaType);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -191,7 +191,7 @@ namespace MyChinook.Controllers
                 }
                 var mediaType = await _dbMediaType.GetAsync(u => u.MediaTypeId == id, tracked: false);
 
-                MediaTypeDto mediaTypeDto = _mapper.Map<MediaTypeDto>(mediaType);
+                var mediaTypeDto = _mapper.Map<MediaTypeDto>(mediaType);
 
                 if (mediaType == null)
                 {
@@ -199,7 +199,7 @@ namespace MyChinook.Controllers
                 }
                 patchMediaTypeDTO.ApplyTo(mediaTypeDto, ModelState);
 
-                MediaType model = _mapper.Map<MediaType>(mediaTypeDto);
+                var model = _mapper.Map<MediaType>(mediaTypeDto);
 
                 await _dbMediaType.UpdateAsync(model);
                 if (!ModelState.IsValid)

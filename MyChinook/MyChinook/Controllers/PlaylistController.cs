@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -34,7 +34,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Playlists", "");
-                IEnumerable<Playlist> playlists = await _dbPlaylist.GetAllAsync();
+                var playlists = await _dbPlaylist.GetAllAsync();
                 _response.Result = _mapper.Map<List<PlaylistDto>>(playlists);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -97,7 +97,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Playlist playlist = _mapper.Map<Playlist>(CreatePlaylistDto);
+                var playlist = _mapper.Map<Playlist>(CreatePlaylistDto);
                 await _dbPlaylist.CreateAsync(playlist);
 
                 _response.Result = _mapper.Map<PlaylistDto>(playlist);
@@ -156,7 +156,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Playlist playlist = _mapper.Map<Playlist>(updatePlaylistDto);
+                var playlist = _mapper.Map<Playlist>(updatePlaylistDto);
                 await _dbPlaylist.UpdateAsync(playlist);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -184,7 +184,7 @@ namespace MyChinook.Controllers
                 }
                 var playlist = await _dbPlaylist.GetAsync(u => u.PlaylistId == id, tracked: false);
 
-                PlaylistDto playlistDto = _mapper.Map<PlaylistDto>(playlist);
+                var playlistDto = _mapper.Map<PlaylistDto>(playlist);
 
                 if (playlist == null)
                 {
@@ -192,7 +192,7 @@ namespace MyChinook.Controllers
                 }
                 patchPlaylistDTO.ApplyTo(playlistDto, ModelState);
 
-                Playlist model = _mapper.Map<Playlist>(playlistDto);
+                var model = _mapper.Map<Playlist>(playlistDto);
 
                 await _dbPlaylist.UpdateAsync(model);
                 if (!ModelState.IsValid)
