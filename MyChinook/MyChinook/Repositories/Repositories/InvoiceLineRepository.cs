@@ -1,24 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyChinook.Data;
-using MyChinook.Models.Entities;
+using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
     public class InvoiceLineRepository : Repository<InvoiceLine>, IInvoiceLineRepository
     {
-        private readonly ApplicationDbContext _db;
-        public InvoiceLineRepository(ApplicationDbContext dbContext) : base(dbContext)
+        private readonly MyChinookContext _db;
+        public InvoiceLineRepository(MyChinookContext dbContext) : base(dbContext)
         {
             _db = dbContext;
         }
 
         public async Task<List<InvoiceLine>> GetInvoiceLineByInvoiceAsync(int id)
-        => await _db.InvoiceLine.Where(u => u.InvoiceId == id).ToListAsync();
+        => await _db.InvoiceLines.Where(u => u.InvoiceId == id).ToListAsync();
 
         public async Task<InvoiceLine> UpdateAsync(InvoiceLine invoiceLine)
         {
-            _db.InvoiceLine.Update(invoiceLine);
+            _db.InvoiceLines.Update(invoiceLine);
             await _db.SaveChangesAsync();
             return invoiceLine;
         }

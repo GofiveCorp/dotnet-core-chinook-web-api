@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Tracks", "");
-                IEnumerable<Track> tracks = await _dbTrack.GetAllAsync();
+                var tracks = await _dbTrack.GetAllAsync();
                 _response.Result = _mapper.Map<List<TrackDto>>(tracks);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -85,7 +85,7 @@ namespace MyChinook.Controllers
         {
             try
             {
-                IEnumerable<Track> tracks = await _dbTrack.GetTrackByAlbumAsync(id);
+                var tracks = await _dbTrack.GetTrackByAlbumAsync(id);
                 if (tracks == null)
                 {
                     return NotFound();
@@ -107,7 +107,7 @@ namespace MyChinook.Controllers
         {
             try
             {
-                IEnumerable<Track> tracks = await _dbTrack.GetTrackByGenreAsync(id);
+                var tracks = await _dbTrack.GetTrackByGenreAsync(id);
                 if (tracks == null)
                 {
                     return NotFound();
@@ -129,7 +129,7 @@ namespace MyChinook.Controllers
         {
             try
             {
-                IEnumerable<Track> tracks = await _dbTrack.GetTrackByMediaTypeAsync(id);
+                var tracks = await _dbTrack.GetTrackByMediaTypeAsync(id);
                 if (tracks == null)
                 {
                     return NotFound();
@@ -167,7 +167,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Track track = _mapper.Map<Track>(CreateTrackDto);
+                var track = _mapper.Map<Track>(CreateTrackDto);
                 //Update to Database (Entity)
                 await _dbTrack.CreateAsync(track);
                 //Response to API (Dto)
@@ -226,7 +226,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Track track = _mapper.Map<Track>(updateTrackDto);
+                var track = _mapper.Map<Track>(updateTrackDto);
                 await _dbTrack.UpdateAsync(track);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -254,7 +254,7 @@ namespace MyChinook.Controllers
                 }
                 var track = await _dbTrack.GetAsync(u => u.TrackId == id, tracked: false);
 
-                TrackDto trackDto = _mapper.Map<TrackDto>(track);
+                var trackDto = _mapper.Map<TrackDto>(track);
 
                 if (track == null)
                 {
@@ -262,7 +262,7 @@ namespace MyChinook.Controllers
                 }
                 patchTrackDTO.ApplyTo(trackDto, ModelState);
 
-                Track model = _mapper.Map<Track>(trackDto);
+                var model = _mapper.Map<Track>(trackDto);
 
                 await _dbTrack.UpdateAsync(model);
                 if (!ModelState.IsValid)

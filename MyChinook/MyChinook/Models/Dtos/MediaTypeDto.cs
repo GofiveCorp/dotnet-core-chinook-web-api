@@ -1,7 +1,4 @@
-﻿using MyChinook.Models.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace MyChinook.Models.Dtos
+﻿namespace MyChinook.Models.Dtos
 {
     public class MediaTypeDto
     {      

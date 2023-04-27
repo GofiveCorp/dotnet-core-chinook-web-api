@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Customers", "");
-                IEnumerable<Customer> customers = await _dbCustomer.GetAllAsync();
+                var customers = await _dbCustomer.GetAllAsync();
                 _response.Result = _mapper.Map<List<CustomerDto>>(customers);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -103,7 +103,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Customer customer = _mapper.Map<Customer>(CreateCustomerDto);
+                var customer = _mapper.Map<Customer>(CreateCustomerDto);
                 await _dbCustomer.CreateAsync(customer);
                 _response.Result = _mapper.Map<CustomerDto>(customer);
                 _response.StatusCode = HttpStatusCode.Created;
@@ -160,7 +160,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Customer customer = _mapper.Map<Customer>(updateCustomerDto);
+                var customer = _mapper.Map<Customer>(updateCustomerDto);
                 await _dbCustomer.UpdateAsync(customer);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -188,7 +188,7 @@ namespace MyChinook.Controllers
                 }
                 var customer = await _dbCustomer.GetAsync(u => u.CustomerId == id, tracked: false);
 
-                CustomerDto customerDto = _mapper.Map<CustomerDto>(customer);
+                var customerDto = _mapper.Map<CustomerDto>(customer);
 
                 if (customer == null)
                 {
@@ -196,7 +196,7 @@ namespace MyChinook.Controllers
                 }
                 patchCustomerDTO.ApplyTo(customerDto, ModelState);
 
-                Customer model = _mapper.Map<Customer>(customerDto);
+                var model = _mapper.Map<Customer>(customerDto);
 
                 await _dbCustomer.UpdateAsync(model);
                 if (!ModelState.IsValid)

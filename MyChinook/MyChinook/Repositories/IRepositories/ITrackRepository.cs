@@ -1,4 +1,4 @@
-﻿using MyChinook.Models.Entities;
+﻿using MyChinook.Models;
 
 namespace MyChinook.Repositories.IRepositories
 {

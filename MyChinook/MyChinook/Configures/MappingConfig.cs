@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 
 namespace MyChinook.Configures
 {
@@ -17,8 +17,7 @@ namespace MyChinook.Configures
             CreateMap<InvoiceLine, InvoiceLineDto>().ReverseMap();
             CreateMap<MediaType, MediaTypeDto>().ReverseMap();
             CreateMap<Playlist, PlaylistDto>().ReverseMap();
-            CreateMap<Track, TrackDto>().ReverseMap();
-            CreateMap<PlaylistTrack, PlaylistTrackDto>().ReverseMap();
+            CreateMap<Track, TrackDto>().ReverseMap();          
         }
     }
 }

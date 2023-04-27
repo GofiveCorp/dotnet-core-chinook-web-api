@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,7 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Employees", "");
-                IEnumerable<Employee> employee = await _dbEmployee.GetAllAsync();
+                var employee = await _dbEmployee.GetAllAsync();
                 _response.Result = _mapper.Map<List<EmployeeDto>>(employee);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -103,7 +103,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Employee employee = _mapper.Map<Employee>(CreateEmployeeDto);
+                var employee = _mapper.Map<Employee>(CreateEmployeeDto);
                 await _dbEmployee.CreateAsync(employee);
                 _response.Result = _mapper.Map<EmployeeDto>(employee);
                 _response.StatusCode = HttpStatusCode.Created;
@@ -160,7 +160,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Employee employee = _mapper.Map<Employee>(updateEmployeeDto);
+                var employee = _mapper.Map<Employee>(updateEmployeeDto);
                 await _dbEmployee.UpdateAsync(employee);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -188,7 +188,7 @@ namespace MyChinook.Controllers
                 }
                 var employee = await _dbEmployee.GetAsync(u => u.EmployeeId == id, tracked: false);
 
-                EmployeeDto employeeDto = _mapper.Map<EmployeeDto>(employee);
+                var employeeDto = _mapper.Map<EmployeeDto>(employee);
 
                 if (employee == null)
                 {
@@ -196,7 +196,7 @@ namespace MyChinook.Controllers
                 }
                 patchEmployeeDTO.ApplyTo(employeeDto, ModelState);
 
-                Employee model = _mapper.Map<Employee>(employeeDto);
+                var model = _mapper.Map<Employee>(employeeDto);
 
                 await _dbEmployee.UpdateAsync(model);
                 if (!ModelState.IsValid)

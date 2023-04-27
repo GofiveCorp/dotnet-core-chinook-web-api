@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
+using MyChinook.Models;
 using MyChinook.Models.Dtos;
-using MyChinook.Models.Entities;
 using MyChinook.Models.Responses;
 using MyChinook.Repositories.IRepositories;
 using System.Net;
@@ -35,7 +35,8 @@ namespace MyChinook.Controllers
             try
             {
                 _logger.Log("Get All Albums", "");
-                IEnumerable<Album> albums = await _dbAlbum.GetAllAsync(includeProperties : "Artist");
+                var albums = await _dbAlbum.GetAllAsync();
+                
                 _response.Result = _mapper.Map<List<AlbumDto>>(albums);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -85,7 +86,7 @@ namespace MyChinook.Controllers
         {
             try
             {
-                IEnumerable<Album> albums = await _dbAlbum.GetAlbumByArtistAsync(id);
+                var albums = await _dbAlbum.GetAlbumByArtistAsync(id);
                 if (albums == null)
                 {
                     return NotFound();
@@ -125,7 +126,7 @@ namespace MyChinook.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                Album album = _mapper.Map<Album>(CreateAlbumDto);
+                var album = _mapper.Map<Album>(CreateAlbumDto);
                 await _dbAlbum.CreateAsync(album);
 
                 _response.Result = _mapper.Map<AlbumDto>(album);
@@ -183,7 +184,7 @@ namespace MyChinook.Controllers
                 {
                     return BadRequest();
                 }
-                Album album = _mapper.Map<Album>(updateAlbumDto);
+                var album = _mapper.Map<Album>(updateAlbumDto);
                 await _dbAlbum.UpdateAsync(album);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -211,14 +212,14 @@ namespace MyChinook.Controllers
                 }
                 var album = await _dbAlbum.GetAsync(u => u.AlbumId == id, tracked: false);
 
-                AlbumDto albumDto = _mapper.Map<AlbumDto>(album);
+                var albumDto = _mapper.Map<AlbumDto>(album);
 
                 if (album == null)
                 {
                     return BadRequest();
                 }
                 patchAlbumDTO.ApplyTo(albumDto, ModelState);
-                Album model = _mapper.Map<Album>(albumDto);
+                var model = _mapper.Map<Album>(albumDto);
                 await _dbAlbum.UpdateAsync(model);
                 if (!ModelState.IsValid)
                 {

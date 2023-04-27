@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyChinook.Data;
+using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 using System.Linq.Expressions;
 
@@ -7,9 +7,9 @@ namespace MyChinook.Repositories.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _db;
+        private readonly MyChinookContext _db;
         internal DbSet<T> DbSet;
-        public Repository(ApplicationDbContext dbContext)
+        public Repository(MyChinookContext dbContext)
         {
             _db = dbContext;    
             this.DbSet = _db.Set<T>();
