@@ -3,10 +3,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class PlaylistRepository : Repository<Playlist>, IPlaylistRepository
+    public class PlaylistRepository : IPlaylistRepository
     {
         private readonly MyChinookContext _db; 
-        public PlaylistRepository(MyChinookContext dbContext) :base(dbContext)
+        public PlaylistRepository(MyChinookContext dbContext) 
         {
             _db = dbContext;  
         }

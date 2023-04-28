@@ -2,7 +2,7 @@
 
 namespace MyChinook.Repositories.IRepositories
 {
-    public interface IInvoiceLineRepository : IRepository<InvoiceLine>
+    public interface IInvoiceLineRepository 
     {
         Task<InvoiceLine> UpdateAsync(InvoiceLine invoiceLine);
 

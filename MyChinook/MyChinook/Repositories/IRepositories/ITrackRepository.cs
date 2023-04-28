@@ -2,7 +2,7 @@
 
 namespace MyChinook.Repositories.IRepositories
 {
-    public interface ITrackRepository : IRepository<Track>
+    public interface ITrackRepository 
     {
         Task<Track> UpdateAsync(Track track);
 

@@ -3,10 +3,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private readonly MyChinookContext _db;
-        public EmployeeRepository(MyChinookContext dbContext): base(dbContext) 
+        public EmployeeRepository(MyChinookContext dbContext) 
         {
             _db = dbContext;
         }

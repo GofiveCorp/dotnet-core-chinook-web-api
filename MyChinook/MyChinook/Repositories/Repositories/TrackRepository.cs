@@ -4,10 +4,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class TrackRepository : Repository<Track>, ITrackRepository
+    public class TrackRepository : ITrackRepository
     {
         private readonly MyChinookContext _db;
-        public TrackRepository(MyChinookContext dbContext) : base(dbContext)
+        public TrackRepository(MyChinookContext dbContext) 
         {
             _db = dbContext;
         }

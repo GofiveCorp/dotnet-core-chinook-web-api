@@ -3,10 +3,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class MediaTypeRepository : Repository<MediaType>, IMediaTypeRepository
+    public class MediaTypeRepository : IMediaTypeRepository
     {
         private readonly MyChinookContext _db;
-        public MediaTypeRepository(MyChinookContext dbContext) : base(dbContext)
+        public MediaTypeRepository(MyChinookContext dbContext)
         {
             _db = dbContext;
         }

@@ -2,7 +2,7 @@
 
 namespace MyChinook.Repositories.IRepositories
 {
-    public interface IPlaylistRepository : IRepository<Playlist>
+    public interface IPlaylistRepository 
     {
         Task<Playlist> UpdateAsync(Playlist playlist);
     }

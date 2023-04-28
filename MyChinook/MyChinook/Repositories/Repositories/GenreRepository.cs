@@ -3,10 +3,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class GenreRepository : Repository<Genre>, IGenreRepository
+    public class GenreRepository : IGenreRepository
     {
         private readonly MyChinookContext _db;
-        public GenreRepository(MyChinookContext dbContext) : base(dbContext)
+        public GenreRepository(MyChinookContext dbContext)
         {
             _db = dbContext;
         }

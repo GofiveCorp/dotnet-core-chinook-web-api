@@ -4,10 +4,10 @@ using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class InvoiceRepository : Repository<Invoice>, IInvoiceRepository
+    public class InvoiceRepository : IInvoiceRepository
     {
         private readonly MyChinookContext _db;
-        public InvoiceRepository(MyChinookContext dbContext) : base(dbContext)
+        public InvoiceRepository(MyChinookContext dbContext) 
         {
             _db = dbContext;
         }
