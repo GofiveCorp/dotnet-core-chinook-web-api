@@ -8,7 +8,7 @@ namespace MyChinook.Repositories.IRepositories
         Task<List<Artist>> GetAllArtistsAsync(CancellationToken cancellationToken);
         Task<Artist> GetAnArtistAsync(int id, CancellationToken cancellationToken);   
         Task<ArtistDto> CreateArtistAsync(ArtiArtistCreateDto CreateArtistDto, CancellationToken cancellationToken);
-        Task<Artist> UpdateAsync(Artist artist);
+        Task<ArtistDetailDto> UpdateAlbumAsync(int artistId, ArtistUpdateDto artistUpdateDto, CancellationToken cancellationToken);
         Task<ArtistDetailDto> DeleteArtistAsync(int id, CancellationToken cancellationToken);
     }
 }

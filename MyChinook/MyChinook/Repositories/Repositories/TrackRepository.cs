@@ -6,25 +6,31 @@ namespace MyChinook.Repositories.Repositories
 {
     public class TrackRepository : ITrackRepository
     {
-        private readonly MyChinookContext _db;
+        private readonly MyChinookContext db;
         public TrackRepository(MyChinookContext dbContext) 
         {
-            _db = dbContext;
+            db = dbContext;
+        }
+
+        public async Task<List<Track>> GetAllTracksAsync(CancellationToken cancellationToken)
+        {
+            var track = await db.Tracks.ToListAsync(cancellationToken);
+            return track;
         }
 
         public async Task<List<Track>> GetTrackByAlbumAsync(int id)
-        => await _db.Tracks.Where(u => u.AlbumId == id).ToListAsync();
+        => await db.Tracks.Where(u => u.AlbumId == id).ToListAsync();
 
         public async Task<List<Track>> GetTrackByGenreAsync(int id)
-        => await _db.Tracks.Where(u => u.GenreId == id).ToListAsync();
+        => await db.Tracks.Where(u => u.GenreId == id).ToListAsync();
 
         public async Task<List<Track>> GetTrackByMediaTypeAsync(int id)
-        => await _db.Tracks.Where(u => u.MediaTypeId == id).ToListAsync();
+        => await db.Tracks.Where(u => u.MediaTypeId == id).ToListAsync();
 
         public async Task<Track> UpdateAsync(Track track)
         {
-            _db.Tracks.Update(track);
-            await _db.SaveChangesAsync();
+            db.Tracks.Update(track);
+            await db.SaveChangesAsync();
             return track;
         }
     }

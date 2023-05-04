@@ -44,7 +44,10 @@ namespace MyChinook.Configures
             CreateMap<Album, AlbumDeleteDto>()             
                 .ReverseMap();
             CreateMap<Album, AlbumUpdateDto>()
-              .ReverseMap();
+                .ReverseMap();
+            CreateMap<ArtistUpdateDto, Artist>()
+                .ReverseMap();
+
             
 
         }

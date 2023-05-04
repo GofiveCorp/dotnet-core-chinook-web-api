@@ -1,20 +1,20 @@
-﻿using MyChinook.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
     public class CustomerRepository :  ICustomerRepository
     {
-        private readonly MyChinookContext _db;
+        private readonly MyChinookContext db;
         public CustomerRepository(MyChinookContext dbContext)
         {
-            _db = dbContext;
+            db = dbContext;
         }
 
-        public async Task<Customer> UpdateAsync(Customer customer)
-        {           
-            _db.Customers.Update(customer);
-            await _db.SaveChangesAsync();
+        public async Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken)
+        {
+            var customer = await db.Customers.ToListAsync(cancellationToken);
             return customer;
         }
     }

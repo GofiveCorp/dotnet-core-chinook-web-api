@@ -5,6 +5,6 @@ namespace MyChinook.Repositories.IRepositories
 {
     public interface IGenreRepository
     {
-        Task<Genre> UpdateAsync(Genre genre);
+        Task<List<Genre>> GetAllGenresAsync(CancellationToken cancellationToken);
     }         
 }

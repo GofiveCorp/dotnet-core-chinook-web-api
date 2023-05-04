@@ -57,5 +57,16 @@ namespace MyChinook.Repositories.Repositories
             var artistDetailDto = mapper.Map<ArtistDetailDto>(artist);
             return artistDetailDto;
         }
+
+        public async Task<ArtistDetailDto> UpdateAlbumAsync(int artistId, ArtistUpdateDto artistUpdateDto, CancellationToken cancellationToken)
+        {
+            var artist = await db.Artists.FirstOrDefaultAsync(a => a.ArtistId == artistId, cancellationToken);
+            mapper.Map(artistUpdateDto, artist);
+            db.Artists.Update(artist);
+            await db.SaveChangesAsync(cancellationToken);
+            var artistDetailDto = mapper.Map<ArtistDetailDto>(artist);
+            return artistDetailDto;
+
+        }
     }
 }

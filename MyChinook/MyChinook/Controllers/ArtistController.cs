@@ -131,74 +131,28 @@ namespace MyChinook.Controllers
             }
             return _response;
         }
+
+        [HttpPut("update/{artistId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<APIResponse>> UpdateAlbum([FromRoute] int artistId, [FromBody] ArtistUpdateDto artistUpdateDto, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var artistDetailDto = await artistService.UpdateAlbumAsync(artistId, artistUpdateDto, cancellationToken);
+                _response.Result = artistDetailDto;
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
     }
 }
 
-//        [HttpPut("{id:int}", Name = "UpdateArtist")]
-//        [ProducesResponseType(StatusCodes.Status200OK)]
-//        [ProducesResponseType(StatusCodes.Status204NoContent)]
-//        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-//        public async Task<ActionResult<APIResponse>> UpdateArtist(int id, [FromBody] ArtistDto updateArtistDto)
-//        {
-//            try
-//            {
-//                if (updateArtistDto == null || id != updateArtistDto.ArtistId)
-//                {
-//                    return BadRequest();
-//                }
-//                var artist = _mapper.Map<Artist>(updateArtistDto);
-//                await _dbArtist.UpdateAsync(artist);
-//                _response.IsSuccess = true;
-//                _response.StatusCode = HttpStatusCode.NoContent;
-//                return Ok(_response);
-//            }
-//            catch (Exception ex)
-//            {
-//                _response.IsSuccess = false;
-//                _response.ErrorsMessages = new List<string>() { ex.ToString() };
-//            }
-//            return _response;
-//        }
-
-//        [HttpPatch]
-//        [ProducesResponseType(StatusCodes.Status200OK)]
-//        [ProducesResponseType(StatusCodes.Status204NoContent)]
-//        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-//        public async Task<ActionResult<APIResponse>> UpdatePartialArtist(int id, JsonPatchDocument<ArtistDto> patchArtistDTO)
-//        {
-//            try
-//            {
-//                if (patchArtistDTO == null || id == 0)
-//                {
-//                    return BadRequest();
-//                }
-//                var artist = await _dbArtist.GetAsync(u => u.ArtistId == id, tracked: false);
-
-//                var artistDto = _mapper.Map<ArtistDto>(artist);
-
-//                if (artist == null)
-//                {
-//                    return BadRequest();
-//                }
-//                patchArtistDTO.ApplyTo(artistDto, ModelState);
-
-//                var model = _mapper.Map<Artist>(artistDto);
-
-//                await _dbArtist.UpdateAsync(model);
-//                if (!ModelState.IsValid)
-//                {
-//                    return BadRequest(ModelState);
-//                }
-//                _response.IsSuccess = true;
-//                _response.StatusCode = HttpStatusCode.NoContent;
-//                return Ok(_response);
-//            }
-//            catch (Exception ex)
-//            {
-//                _response.IsSuccess = false;
-//                _response.ErrorsMessages = new List<string>() { ex.ToString() };
-//            }
-//            return _response;
-//        }
-//    }
-//}

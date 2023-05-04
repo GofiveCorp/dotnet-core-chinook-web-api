@@ -5,6 +5,6 @@ namespace MyChinook.Repositories.IRepositories
 {
     public interface IMediaTypeRepository 
     {
-        Task<MediaType> UpdateAsync(MediaType mediaType);
+        Task<List<MediaType>> GetAllMediaTypesAsync(CancellationToken cancellationToken);
     }
 }

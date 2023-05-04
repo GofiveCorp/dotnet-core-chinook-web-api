@@ -6,20 +6,20 @@ namespace MyChinook.Repositories.Repositories
 {
     public class InvoiceLineRepository : IInvoiceLineRepository
     {
-        private readonly MyChinookContext _db;
+        private readonly MyChinookContext db;
         public InvoiceLineRepository(MyChinookContext dbContext) 
         {
-            _db = dbContext;
+            db = dbContext;
+        }
+
+        public async Task<List<InvoiceLine>> GetAllInvoiceLinesAsync(CancellationToken cancellationToken)
+        {
+            var invoiceLine = await db.InvoiceLines.ToListAsync(cancellationToken);
+            return invoiceLine;
         }
 
         public async Task<List<InvoiceLine>> GetInvoiceLineByInvoiceAsync(int id)
-        => await _db.InvoiceLines.Where(u => u.InvoiceId == id).ToListAsync();
+        => await db.InvoiceLines.Where(u => u.InvoiceId == id).ToListAsync();
 
-        public async Task<InvoiceLine> UpdateAsync(InvoiceLine invoiceLine)
-        {
-            _db.InvoiceLines.Update(invoiceLine);
-            await _db.SaveChangesAsync();
-            return invoiceLine;
-        }
     }
 }

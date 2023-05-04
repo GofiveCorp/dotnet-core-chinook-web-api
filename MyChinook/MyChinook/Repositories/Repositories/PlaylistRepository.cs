@@ -1,21 +1,21 @@
-﻿using MyChinook.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
     public class PlaylistRepository : IPlaylistRepository
     {
-        private readonly MyChinookContext _db; 
+        private readonly MyChinookContext db; 
         public PlaylistRepository(MyChinookContext dbContext) 
         {
-            _db = dbContext;  
+            db = dbContext;  
         }
 
-        public async Task<Playlist>UpdateAsync(Playlist playlist)
+        public async Task<List<Playlist>> GetAllPlaylistsAsync(CancellationToken cancellationToken)
         {
-            _db.Playlists.Update(playlist);
-            await _db.SaveChangesAsync();
+            var playlist = await db.Playlists.ToListAsync(cancellationToken);
             return playlist;
-        }       
+        }      
     }
 }
