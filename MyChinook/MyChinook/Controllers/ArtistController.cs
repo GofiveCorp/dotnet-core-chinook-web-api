@@ -17,7 +17,7 @@ namespace MyChinook.Controllers
         protected APIResponse _response;
         private readonly IMapper _mapper;
         private readonly ILogging _logger;
-        private readonly IArtistRepository _dbArtist;
+        private readonly IArtistRepository artistService;
 
         public ArtistController(IMapper mappingConfig,
                                 ILogging logging,
@@ -26,16 +26,15 @@ namespace MyChinook.Controllers
             this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            _dbArtist = dbContext;
+            artistService = dbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<APIResponse>> GetArtists()
+        public async Task<ActionResult<APIResponse>> GetArtists(CancellationToken cancellationToken)
         {
             try
             {
-                _logger.Log("Get All Artists", "");
-                var artists = await _dbArtist.GetAllAsync();
+                var artists = await artistService.GetAllArtistsAsync(cancellationToken);
                 _response.Result = _mapper.Map<List<ArtistDto>>(artists);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -48,27 +47,25 @@ namespace MyChinook.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetArtist")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> GetArtist(int id)
+        public async Task<ActionResult<APIResponse>> GetArtist([FromRoute] int id, CancellationToken cancellationToken)
         {
             try
             {
                 if (id == 0)
                 {
-                    _logger.Log("Get a Artist", "");
                     return BadRequest();
                 }
-                var artist = await _dbArtist.GetAsync(u => u.ArtistId == id);
-
+                var artist = await artistService.GetAnArtistAsync(id, cancellationToken);
                 if (artist == null)
                 {
                     return NotFound();
                 }
-                _response.Result = _mapper.Map<ArtistDto>(artist);
+                _response.Result = _mapper.Map<ArtistDetailDto>(artist);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -80,34 +77,24 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPost(Name = "CreateArtist")]
+        [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreateArtist([FromBody] ArtistDto CreateArtistDto)
+        public async Task<ActionResult<APIResponse>> CreateArtist([FromBody] ArtiArtistCreateDto CreateArtistDto, CancellationToken cancellationToken)
         {
             try
             {
-                if (await _dbArtist.GetAsync(u => u.Name.ToLower() == CreateArtistDto.Name.ToLower()) != null)
-                {
-                    ModelState.AddModelError("Error Message", " This Name Already Exist");
-                    return BadRequest(ModelState);
-                }
                 if (CreateArtistDto == null)
                 {
                     return BadRequest(CreateArtistDto);
                 }
-                if (CreateArtistDto.ArtistId > 0)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
-                var artist = _mapper.Map<Artist>(CreateArtistDto);
-                await _dbArtist.CreateAsync(artist);
+                var newArtist = await artistService.CreateArtistAsync(CreateArtistDto, cancellationToken);
 
-                _response.Result = _mapper.Map<ArtistDto>(artist);
+                _response.Result = newArtist;
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetArtist", new { id = artist.ArtistId }, _response);
+                return Ok(_response);
             }
             catch (Exception ex)
             {
@@ -117,28 +104,24 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpDelete("{id:int}", Name = "DeleteArtist")]
+        [HttpDelete("delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteArtist(int id)
+        public async Task<ActionResult<APIResponse>> DeleteArtist([FromQuery]int id,CancellationToken cancellationToken)
         {
             try
             {
-
-                if (id == 0)
-                {
-                    return BadRequest();
-                }
-                var artist = await _dbArtist.GetAsync(u => u.ArtistId == id);
+                var artist = await artistService.GetAnArtistAsync(id, cancellationToken);
                 if (artist == null)
                 {
                     return NotFound();
                 }
-                await _dbArtist.RemoveAsync(artist);
+                var deletedArtist = await artistService.DeleteArtistAsync(id, cancellationToken);
+                _response.Result = deletedArtist;
+                _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -149,63 +132,18 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPut("{id:int}", Name = "UpdateArtist")]
+        [HttpPut("update/{artistId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateArtist(int id, [FromBody] ArtistDto updateArtistDto)
+        public async Task<ActionResult<APIResponse>> UpdateAlbum([FromRoute] int artistId, [FromBody] ArtistUpdateDto artistUpdateDto, CancellationToken cancellationToken)
         {
             try
             {
-                if (updateArtistDto == null || id != updateArtistDto.ArtistId)
-                {
-                    return BadRequest();
-                }
-                var artist = _mapper.Map<Artist>(updateArtistDto);
-                await _dbArtist.UpdateAsync(artist);
+                var artistDetailDto = await artistService.UpdateAlbumAsync(artistId, artistUpdateDto, cancellationToken);
+                _response.Result = artistDetailDto;
                 _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorsMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
-        }
-
-        [HttpPatch]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdatePartialArtist(int id, JsonPatchDocument<ArtistDto> patchArtistDTO)
-        {
-            try
-            {
-                if (patchArtistDTO == null || id == 0)
-                {
-                    return BadRequest();
-                }
-                var artist = await _dbArtist.GetAsync(u => u.ArtistId == id, tracked: false);
-
-                var artistDto = _mapper.Map<ArtistDto>(artist);
-
-                if (artist == null)
-                {
-                    return BadRequest();
-                }
-                patchArtistDTO.ApplyTo(artistDto, ModelState);
-
-                var model = _mapper.Map<Artist>(artistDto);
-
-                await _dbArtist.UpdateAsync(model);
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -217,3 +155,4 @@ namespace MyChinook.Controllers
         }
     }
 }
+

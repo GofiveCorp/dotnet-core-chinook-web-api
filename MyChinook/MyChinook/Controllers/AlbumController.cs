@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MyChinook.Customizes.Logging;
 using MyChinook.Models;
@@ -17,7 +16,7 @@ namespace MyChinook.Controllers
         protected APIResponse _response;
         private readonly IMapper _mapper;
         private readonly ILogging _logger;
-        private readonly IAlbumRepository _dbAlbum;
+        private readonly IAlbumRepository albumService;
 
         public AlbumController(IMapper mappingConfig,
                                ILogging logging,
@@ -26,18 +25,16 @@ namespace MyChinook.Controllers
             this._response = new();
             _mapper = mappingConfig;
             _logger = logging;
-            _dbAlbum = dbContext;
+            albumService = dbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<APIResponse>> GetAlbums()
+        public async Task<ActionResult<APIResponse>> GetAllAlbums(CancellationToken cancellationToken)
         {
             try
-            {
-                _logger.Log("Get All Albums", "");
-                var albums = await _dbAlbum.GetAllAsync();
-                
-                _response.Result = _mapper.Map<List<AlbumDto>>(albums);
+            {               
+                var albums = await albumService.GetAllAlbumsAsync(cancellationToken);
+                _response.Result = _mapper.Map<List<AlbumDetailDto>>(albums);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -49,22 +46,20 @@ namespace MyChinook.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetAlbum")]
+        [HttpGet("{albumId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> GetAlbum(int id)
+        public async Task<ActionResult<APIResponse>> GetAnAlbum([FromRoute] int albumId, CancellationToken cancellationToken)
         {
             try
             {
-                if (id == 0)
+                if (albumId == 0)
                 {
-                    _logger.Log("Get a Album", "");
                     return BadRequest();
                 }
-                var album = await _dbAlbum.GetAsync(u => u.AlbumId == id);
-
+                var album = await albumService.GetAnAlbumAsync(albumId, cancellationToken);
                 if (album == null)
                 {
                     return NotFound();
@@ -81,12 +76,12 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpGet("artist/{id}")]
-        public async Task<ActionResult<APIResponse>> GetByArtist(int id)
+        [HttpGet("artist/{artistId}")]
+        public async Task<ActionResult<APIResponse>> GetAlbumsByArtist(int artistId, CancellationToken cancellationToken)
         {
             try
             {
-                var albums = await _dbAlbum.GetAlbumByArtistAsync(id);
+                var albums = await albumService.GetAlbumsByArtistAsync(artistId, cancellationToken);
                 if (albums == null)
                 {
                     return NotFound();
@@ -104,64 +99,51 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPost]
+        [HttpPost("create/{artistId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<APIResponse>> CreateAlbum([FromBody] AlbumDto CreateAlbumDto)
+        public async Task<ActionResult<APIResponse>> CreateAlbum([FromRoute] int artistId, [FromBody] AlbumCreateDto CreateAlbumDto, CancellationToken cancellationToken)
         {
             try
             {
-                if (await _dbAlbum.GetAsync(u => u.Title.ToLower() == CreateAlbumDto.Title.ToLower()) != null)
-                {
-                    ModelState.AddModelError("Error Message", " This Title Already Exist");
-                    return BadRequest(ModelState);
-                }
-                if (CreateAlbumDto == null)
-                {
-                    return BadRequest(CreateAlbumDto);
-                }
-                if (CreateAlbumDto.AlbumId > 0)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
-                var album = _mapper.Map<Album>(CreateAlbumDto);
-                await _dbAlbum.CreateAsync(album);
+                var albumDto = await albumService.CreateAlbumAsync(artistId, CreateAlbumDto, cancellationToken);
 
-                _response.Result = _mapper.Map<AlbumDto>(album);
+                _response.Result = albumDto;
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetAlbum", new { id = album.AlbumId }, _response);
+                return _response;
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorsMessages = new List<string>() { ex.ToString() };
             }
-            return _response;
+            return Ok(_response);
         }
 
-        [HttpDelete("{id:int}", Name = "DeleteAlbum")]
+        [HttpDelete("delete/{albumId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> DeleteAlbum(int id)
+        public async Task<ActionResult<APIResponse>> DeleteAlbum([FromRoute] int albumId, CancellationToken cancellationToken)
         {
             try
             {
-                if (id == 0)
+                if (albumId == 0)
                 {
                     return BadRequest();
                 }
-                var album = await _dbAlbum.GetAsync(u => u.AlbumId == id);
+                var album = await albumService.GetAnAlbumAsync(albumId, cancellationToken);
                 if (album == null)
                 {
                     return NotFound();
                 }
-                await _dbAlbum.RemoveAsync(album);
+                var albumDeleteDto = await albumService.DeleteAlbumAsync(albumId, cancellationToken);
+                _response.Result = albumDeleteDto;
                 _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -172,61 +154,18 @@ namespace MyChinook.Controllers
             return _response;
         }
 
-        [HttpPut("{id:int}", Name = "UpdateAlbum")]
+        [HttpPut("update/{albumId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdateAlbum(int id, [FromBody] AlbumDto updateAlbumDto)
+        public async Task<ActionResult<APIResponse>> UpdateAlbum([FromRoute]int albumId, [FromBody] AlbumUpdateDto albumUpdateDto, CancellationToken cancellationToken)
         {
             try
-            {
-                if (updateAlbumDto == null || id != updateAlbumDto.AlbumId)
-                {
-                    return BadRequest();
-                }
-                var album = _mapper.Map<Album>(updateAlbumDto);
-                await _dbAlbum.UpdateAsync(album);
+            {              
+                var albumDetailDto = await albumService.UpdateAlbumAsync(albumId, albumUpdateDto, cancellationToken);
+                _response.Result = albumDetailDto;
                 _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorsMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
-        }
-
-        [HttpPatch]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> UpdatePartialAlbum(int id, JsonPatchDocument<AlbumDto> patchAlbumDTO)
-        {
-            try
-            {
-                if (patchAlbumDTO == null || id == 0)
-                {
-                    return BadRequest();
-                }
-                var album = await _dbAlbum.GetAsync(u => u.AlbumId == id, tracked: false);
-
-                var albumDto = _mapper.Map<AlbumDto>(album);
-
-                if (album == null)
-                {
-                    return BadRequest();
-                }
-                patchAlbumDTO.ApplyTo(albumDto, ModelState);
-                var model = _mapper.Map<Album>(albumDto);
-                await _dbAlbum.UpdateAsync(model);
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -238,3 +177,5 @@ namespace MyChinook.Controllers
         }
     }
 }
+
+

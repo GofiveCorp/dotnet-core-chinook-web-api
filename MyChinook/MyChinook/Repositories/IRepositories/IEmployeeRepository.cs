@@ -3,8 +3,8 @@
 
 namespace MyChinook.Repositories.IRepositories
 {
-    public interface IEmployeeRepository : IRepository<Employee>
-    {      
-        Task<Employee> UpdateAsync(Employee employee);              
+    public interface IEmployeeRepository 
+    {
+        Task<List<Employee>> GetAllEmployeesAsync(CancellationToken cancellationToken);
     }
 }

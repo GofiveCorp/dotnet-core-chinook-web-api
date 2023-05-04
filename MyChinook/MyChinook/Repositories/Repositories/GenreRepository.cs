@@ -1,20 +1,20 @@
-﻿using MyChinook.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyChinook.Models;
 using MyChinook.Repositories.IRepositories;
 
 namespace MyChinook.Repositories.Repositories
 {
-    public class GenreRepository : Repository<Genre>, IGenreRepository
+    public class GenreRepository : IGenreRepository
     {
-        private readonly MyChinookContext _db;
-        public GenreRepository(MyChinookContext dbContext) : base(dbContext)
+        private readonly MyChinookContext db;
+        public GenreRepository(MyChinookContext dbContext)
         {
-            _db = dbContext;
+            db = dbContext;
         }
 
-        public async Task<Genre> UpdateAsync(Genre genre)
+        public async Task<List<Genre>> GetAllGenresAsync(CancellationToken cancellationToken)
         {
-            _db.Genres.Update(genre);
-            await _db.SaveChangesAsync();   
+            var genre = await db.Genres.ToListAsync(cancellationToken);
             return genre;
         }
     }
